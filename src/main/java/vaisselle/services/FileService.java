@@ -9,12 +9,15 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class FileService {
 
-    public String saveFile(MultipartFile photoFile) {
+    private final String UPLOADFOLDER = "/uploads/";
+
+    public String savePhoto(MultipartFile photoFile) {
         String result = "";
+
         if (!photoFile.isEmpty()) {
             try {
 
-                String uploadDir = System.getProperty("user.dir") + "/uploads/";
+                String uploadDir = System.getProperty("user.dir") + UPLOADFOLDER;
 
                 File uploadPath = new File(uploadDir);
                 if (!uploadPath.exists()) {
@@ -25,7 +28,7 @@ public class FileService {
                 File destination = new File(uploadPath, fileName);
                 photoFile.transferTo(destination);
 
-                result = "/uploads/" + fileName;
+                result = UPLOADFOLDER + fileName;
 
             } catch (Exception e) {
             }

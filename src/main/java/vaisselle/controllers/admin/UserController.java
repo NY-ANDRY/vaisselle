@@ -52,7 +52,7 @@ public class UserController {
     public String saveUser(@ModelAttribute User user,
             @RequestParam("photoFile") MultipartFile photoFile) throws IOException {
 
-        String img = fileService.saveFile(photoFile);
+        String img = fileService.savePhoto(photoFile);
 
         if (!img.isEmpty()) {
             user.setImg(img);
@@ -78,7 +78,7 @@ public class UserController {
             return "redirect:/admin/users";
         }
 
-        String img = fileService.saveFile(photoFile);
+        String img = fileService.savePhoto(photoFile);
         if (!img.isEmpty()) {
             user.setImg(img);
         }
