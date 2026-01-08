@@ -13,20 +13,36 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>id</th>
+                        <th>photo</th>
                         <th>Name</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="user : ${users}" class="hover">
+
                         <td th:text="${user.id}">1</td>
-                        <td th:text="${user.name}">Name</td>
+
                         <td>
+                            <img th:if="${user.img != null && user.img != ''}" th:src="@{${user.img}}" alt="img"
+                                class="w-10 h-10 rounded-full">
+
+                            <img th:unless="${user.img != null && user.img != ''}" th:src="@{/svg/dark-ph1.svg}"
+                                alt="img" class="w-10 h-10 rounded-sm">
+                        </td>
+
+                        <td th:text="${user.name}">Name</td>
+
+                        <td>
+                            <a th:href="@{/users/{id}/update(id=${user.id})}">
+                                <button class="btn btn-xs btn-primary">update</button>
+                            </a>
                             <a th:href="@{/users/{id}(id=${user.id})}">
-                                <button class="btn btn-xs">voir</button>
+                                <button class="btn btn-xs btn-primary">voir</button>
                             </a>
                         </td>
+
                     </tr>
                 </tbody>
             </table>

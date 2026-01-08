@@ -27,4 +27,12 @@ public class UserService {
         long idU = idUser;
         return userRepository.findById(idU).orElse(null);
     }
+
+    public User updateUser(User user) {
+        User original = userRepository.findById(user.getId()).orElseThrow();
+        if (user.getImg() == null || user.getImg().isEmpty()) {
+            user.setImg(original.getImg());
+        }
+        return userRepository.save(user);
+    }
 }
