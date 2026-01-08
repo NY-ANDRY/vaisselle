@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="/css/browser@4.js"></script>
+    <link href="/css/daisyui@5.css" rel="stylesheet" type="text/css" />
+    <title layout:title-pattern="$LAYOUT_TITLE — $CONTENT_TITLE">My App</title>
+</head>
+
+<body class="bg-base-100 text-base-content">
+
+    <div class="px-12 mx-auto">
+        <div class="flex gap-6">
+
+            <div th:replace="~{layout/aside :: aside}"></div>
+
+            <main class="flex-1">
+                <div th:replace="~{layout/header :: header}"></div>
+                <div layout:fragment="content"></div>
+            </main>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

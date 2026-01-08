@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}">
+
+<head>
+    <title>Users</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content" class="p-6">
+
+        <div class="overflow-x-auto">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}" class="hover">
+                        <td th:text="${user.id}">1</td>
+                        <td th:text="${user.name}">Name</td>
+                        <td>
+                            <a th:href="@{/users/{id}(id=${user.id})}">
+                                <button class="btn btn-xs">voir</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

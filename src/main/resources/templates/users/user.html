@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}">
+<head>
+    <title>View User</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="p-6">
+
+    <h2 class="text-2xl font-bold mb-4">Utilisateur</h2>
+
+    <div class="card card-sm bg-base-100 shadow-sm w-72">
+        <div class="card-body">
+            <p><strong>ID :</strong> <span th:text="${user.id}">1</span></p>
+            <p><strong>Nom :</strong> <span th:text="${user.name}">Nom</span></p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a th:href="@{/users}">
+            <button class="btn btn-sm btn-primary">
+                Retour à la liste
+            </button>
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
