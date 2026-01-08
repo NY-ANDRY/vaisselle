@@ -3,36 +3,20 @@
 
 <body>
 
-    <aside class="pt-2">
-        <div class="flex-1">
+    <aside class="flex flex-col pt-0 ">
+        <div class="flex">
             <a href="/" class="pl-4 font-medium text-3xl py-2">Vaisselle</a>
         </div>
         <div class="h-4"></div>
-        <ul class="menu w-76 p-2">
 
-            <li>
-                <details open>
-                    <summary>user</summary>
-                    <ul class="p-2">
-                        <li><a href="/users">users</a></li>
-                        <li><a href="/users/create">create</a></li>
-                    </ul>
-                </details>
+        <div th:if="${uri.startsWith('/admin')}" class="flex flex-col flex-1">
+            <div th:replace="~{layout/aside-admin :: ul}"></div>
+        </div>
 
-                <details open>
-                    <summary>test</summary>
-                    <ul class="p-2">
-                        <li><a href="/session">session</a></li>
-                    </ul>
-                </details>
+        <div th:if="${uri.startsWith('/client')}" class="flex flex-col flex-1">
+            <div th:replace="~{layout/aside-client :: ul}"></div>
+        </div>
 
-                <a href="#">
-                    <summary>abc</summary>
-                </a>
-
-            </li>
-
-        </ul>
     </aside>
 
 </body>

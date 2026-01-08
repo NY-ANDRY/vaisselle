@@ -35,10 +35,10 @@
                         <td th:text="${user.name}">Name</td>
 
                         <td>
-                            <a th:href="@{/users/{id}/update(id=${user.id})}">
+                            <a th:href="@{/admin/users/{id}/update(id=${user.id})}">
                                 <button class="btn btn-xs btn-primary">update</button>
                             </a>
-                            <a th:href="@{/users/{id}(id=${user.id})}">
+                            <a th:href="@{/admin/users/{id}(id=${user.id})}">
                                 <button class="btn btn-xs btn-primary">voir</button>
                             </a>
                         </td>

@@ -1,4 +1,4 @@
-package vaisselle.controllers;
+package vaisselle.controllers.admin;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/session")
+@RequestMapping("/admin/session")
 public class SessionController {
 
     public SessionController() {
@@ -31,7 +31,7 @@ public class SessionController {
 
         model.addAttribute("show", show);
         model.addAttribute("value", value);
-        return "test/session";
+        return "admin/test/session";
 
     }
 
@@ -42,7 +42,7 @@ public class SessionController {
             HttpSession session) {
 
         session.setAttribute(name, value);
-        return "redirect:/session?show=" + name;
+        return "redirect:/admin/session?show=" + name;
 
     }
 }

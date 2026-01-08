@@ -1,4 +1,4 @@
-package vaisselle.controllers;
+package vaisselle.controllers.admin;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import vaisselle.services.FileService;
 import vaisselle.services.UserService;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/admin/users")
 public class UserController {
 
     private final UserService userService;
@@ -31,21 +31,21 @@ public class UserController {
     @GetMapping("")
     public String viewUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "users/users";
+        return "admin/users/users";
     }
 
     @GetMapping("/{id}")
     public String viewUser(@PathVariable("id") Long id, Model model) {
         var user = userService.getUser(id);
         model.addAttribute("user", user);
-        return "users/user";
+        return "admin/users/user";
     }
 
     @GetMapping("/create")
     public String createUserForm(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("actionUrl", "/users/");
-        return "users/form";
+        model.addAttribute("actionUrl", "/admin/users/");
+        return "admin/users/form";
     }
 
     @PostMapping("/")
@@ -59,23 +59,23 @@ public class UserController {
         }
 
         userService.saveUser(user);
-        return "redirect:/users";
+        return "redirect:/admin/users";
     }
 
     @GetMapping("/{id}/update")
     public String updateUserForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
-        model.addAttribute("actionUrl", "/users/update");
-        return "users/form";
+        model.addAttribute("actionUrl", "/admin/users/update");
+        return "admin/users/form";
     }
 
     @PostMapping("/update")
     public String updateUser(@ModelAttribute User user,
             @RequestParam("photoFile") MultipartFile photoFile) throws IOException {
 
-        if (user.getId() == null){
+        if (user.getId() == null) {
             System.out.println(user.toString());
-            return "redirect:/users";
+            return "redirect:/admin/users";
         }
 
         String img = fileService.saveFile(photoFile);
@@ -84,6 +84,6 @@ public class UserController {
         }
 
         userService.updateUser(user);
-        return "redirect:/users/" + user.getId();
+        return "redirect:/admin/users/" + user.getId();
     }
 }

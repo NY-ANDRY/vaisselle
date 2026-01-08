@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <ul class="menu flex-1 w-76 p-2 flex flex-col justify-between">
+
+        <li>
+            <details open>
+                <summary>user</summary>
+                <ul class="p-2">
+                    <li><a href="/admin/users">users</a></li>
+                    <li><a href="/admin/users/create">create</a></li>
+                </ul>
+            </details>
+
+            <details open>
+                <summary>test</summary>
+                <ul class="p-2">
+                    <li><a href="/admin/session">session</a></li>
+                </ul>
+            </details>
+        </li>
+        <li class="mt-4 border-t pt-2">
+            <a href="/client" class="font-bold">client</a>
+        </li>
+
+    </ul>
+
+</body>
+
+</html>

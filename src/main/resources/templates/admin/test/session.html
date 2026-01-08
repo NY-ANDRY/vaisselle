@@ -18,7 +18,7 @@
         </div>
 
         <div class="mt-4 flex flex-col gap-2">
-            <form th:action="@{/session}" method="post" class="flex gap-2 items-center">
+            <form th:action="@{/admin/session}" method="post" class="flex gap-2 items-center">
                 <input type="text" name="name" placeholder="session name"
                     class="input input-sm input-bordered" />
 
@@ -27,7 +27,7 @@
 
                 <button type="submit" class="btn btn-sm btn-primary">Mettre à jour</button>
             </form>
-            <form th:action="@{/session}" method="get" class="flex gap-2 items-center">
+            <form th:action="@{/admin/session}" method="get" class="flex gap-2 items-center">
                 <input type="text" name="show" placeholder="session name" class="input input-sm input-bordered" />
                 <button type="submit" class="btn btn-sm btn-primary">show</button>
             </form>
