@@ -29,6 +29,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductCategory> productCategories;
 
+    @OneToMany(mappedBy = "product")
+    private List<Model> models;
+
     public Product() {
     }
 

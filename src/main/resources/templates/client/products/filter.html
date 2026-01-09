@@ -1,0 +1,52 @@
+<div th:fragment="filter" class="w-64 flex-shrink-0 bg-base-100 p-4 rounded-box shadow-sm">
+    <h3 class="text-lg font-bold mb-4">Filters</h3>
+    <form action="/client/products" method="get">
+
+        <!-- Matiere Filter -->
+        <div class="form-control mb-4">
+            <label class="label">
+                <span class="label-text">Matiere</span>
+            </label>
+            <select name="matiereId" class="select select-bordered w-full select-sm">
+                <option value="">All Matieres</option>
+                <option th:each="matiere : ${matieres}" th:value="${matiere.id}" th:text="${matiere.name}"
+                    th:selected="${matiere.id == matiereId}">
+                </option>
+            </select>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="form-control mb-4">
+            <label class="label">
+                <span class="label-text">Categories</span>
+            </label>
+            <div class="flex flex-wrap gap-4 gap-y-0 max-h-48 overflow-y-auto p-2">
+                <div class="form-control" th:each="category : ${categories}">
+                    <label class="label cursor-pointer justify-start gap-2 py-2">
+                        <input type="checkbox" name="categoryIds" th:value="${category.id}" class="checkbox checkbox-sm"
+                            th:checked="${categoryIds != null && categoryIds.contains(category.id)}" />
+                        <span class="label-text text-sm" th:text="${category.name}"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location Filter -->
+        <div class="form-control mb-4">
+            <label class="label">
+                <span class="label-text">Location (Price)</span>
+            </label>
+            <div class="flex gap-2">
+                <input type="number" name="minLocation" placeholder="Min" class="input input-bordered input-sm w-full"
+                    th:value="${minLocation}" step="0.01">
+                <input type="number" name="maxLocation" placeholder="Max" class="input input-bordered input-sm w-full"
+                    th:value="${maxLocation}" step="0.01">
+            </div>
+        </div>
+
+        <div class="form-control mt-8">
+            <button type="submit" class="btn btn-primary btn-sm">Apply Filters</button>
+            <a href="/client/products" class="btn btn-ghost btn-sm">Reset</a>
+        </div>
+    </form>
+</div>

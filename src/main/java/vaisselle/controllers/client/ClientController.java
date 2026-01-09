@@ -13,6 +13,6 @@ public class ClientController {
 
     @GetMapping("")
     public String home() {
-        return "client/home";
+        return "redirect:/client/products";
     }
 }

@@ -1,7 +1,14 @@
 #!/bin/bash
 
 output_file="sql/base.txt"
-tables=("t_categories" "t_matieres" "t_models" "t_products" "t_products_categories" "t_users")
+tables=(
+"t_categories" 
+"t_matieres" 
+"t_models" 
+"t_products" 
+"t_products_categories" 
+"t_users"
+)
 
 echo "tables structure" > "$output_file"
 echo "" >> "$output_file"
