@@ -24,8 +24,7 @@ public class UserService {
     }
 
     public User getUser(Long idUser) {
-        long idU = idUser;
-        return userRepository.findById(idU).orElse(null);
+        return userRepository.findById(idUser).orElse(null);
     }
 
     public User updateUser(User user) {

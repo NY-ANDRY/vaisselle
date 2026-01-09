@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout/layout}">
+
+<head>
+    <title>Users</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content" class="flex w-full p-6 gap-4">
+
+        <div class="flex">
+            abc
+        </div>
+
+        <div class="flex flex-wrap gap-8">
+
+            <div th:each="product : ${products}"  class="card card-sm card-side bg-base-100 w-86 shadow-sm">
+                <figure>
+                    <img src="/uploads/test/fourchette.jpg" class="w-32 h-42" alt="Movie" />
+                </figure>
+
+                <div class="card-body w-42">
+                    <h2 class="card-title">New movie is released!</h2>
+                    <p>Click the button to watch on Jetflix app.</p>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-xs btn-primary">Watch</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</body>
+
+</html>
