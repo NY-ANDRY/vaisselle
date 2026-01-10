@@ -1,5 +1,6 @@
 package vaisselle.models.tables;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,22 +10,23 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "t_products_colors")
-public class ProductColor {
-
+@Table(name = "t_product_images")
+public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idProduct")
+    @JoinColumn(name = "id_product", nullable = false)
     private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "idColor")
-    private Color color;
+    @Column(name = "url", nullable = false)
+    private String url;
 
-    public ProductColor() {
+    @Column(name = "is_default")
+    private boolean isDefault = false;
+
+    public ProductImage() {
     }
 
     public Long getId() {
@@ -43,17 +45,19 @@ public class ProductColor {
         this.product = product;
     }
 
-    public Color getColor() {
-        return color;
+    public String getUrl() {
+        return url;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    @Override
-    public String toString() {
-        return "ProductColor [id=" + id + "]";
+    public boolean isDefault() {
+        return isDefault;
     }
 
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
+    }
 }

@@ -25,8 +25,9 @@ public class Model {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "model")
-    private List<ModelType> modelstypes;
+    @ManyToOne
+    @JoinColumn(name = "id_type")
+    private Type type;
 
     @OneToMany(mappedBy = "product")
     private List<Product> products;
@@ -62,12 +63,12 @@ public class Model {
         this.description = description;
     }
 
-    public List<ModelType> getModelstypes() {
-        return modelstypes;
+    public Type getType() {
+        return type;
     }
 
-    public void setModelstypes(List<ModelType> modelstypes) {
-        this.modelstypes = modelstypes;
+    public void setType(Type type) {
+        this.type = type;
     }
 
     public List<Product> getProducts() {

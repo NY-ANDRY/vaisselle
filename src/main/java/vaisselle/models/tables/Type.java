@@ -19,7 +19,7 @@ public class Type {
     private String name;
 
     @OneToMany(mappedBy = "type")
-    private List<ModelType> modelType;
+    private List<Model> models;
 
     public Type() {
     }

@@ -24,8 +24,7 @@
             <div class="flex flex-col gap-2">
                 <h2 class="text-xl font-semibold text-neutral-700">Types</h2>
                 <div class="flex flex-wrap gap-2">
-                    <span th:each="mt : ${model.modelstypes}" class="badge badge-neutral"
-                        th:text="${mt.type.name}">Type</span>
+                    <span class="badge badge-neutral" th:text="${model.type.name}">Type</span>
                 </div>
             </div>
 
@@ -37,11 +36,14 @@
                     <div th:each="product : ${model.products}"
                         class="card bg-base-100 shadow-sm border border-neutral-200">
                         <figure class="px-4 pt-4">
-                            <img th:if="${product.url != null && product.url != ''}" th:src="@{${product.url}}"
-                                class="rounded-xl h-48 w-full object-cover" alt="Product Image">
-                            <img th:unless="${product.url != null && product.url != ''}"
+
+                            <img th:if="${product.defaultImageUrl != null && product.defaultImageUrl != ''}"
+                                th:src="@{${product.defaultImageUrl}}" class="rounded-xl h-48 w-full object-cover"
+                                alt="Product Image">
+                            <img th:unless="${product.defaultImageUrl != null && product.defaultImageUrl != ''}"
                                 th:src="@{/uploads/test/fourchette.jpg}" class="rounded-xl h-48 w-full object-cover"
                                 alt="Default Image">
+
                         </figure>
                         <div class="card-body p-4">
                             <h3 class="card-title text-base" th:text="${product.name}">Product Name</h3>
@@ -53,11 +55,11 @@
                                 </div>
 
                                 <!-- Colors (Many-to-Many via ProductColor) -->
-                                <div th:if="${product.productColors != null && !product.productColors.isEmpty()}">
+                                <div th:if="${product.color != null}">
                                     <span class="font-semibold">Colors:</span>
                                     <div class="flex flex-wrap gap-1 mt-1">
-                                        <span th:each="pc : ${product.productColors}" class="badge badge-ghost badge-sm"
-                                            th:text="${pc.color.name}">Color</span>
+                                        <span class="badge badge-ghost badge-sm"
+                                            th:text="${product.color.name}">Color</span>
                                     </div>
                                 </div>
 

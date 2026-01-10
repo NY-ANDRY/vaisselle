@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class VModelService {
+public class VProductService {
 
     private final VProductRepository vProductRepository;
 
     private final EntityManager entityManager;
 
-    public VModelService(VProductRepository vModelRepository, EntityManager entityManager) {
+    public VProductService(VProductRepository vModelRepository, EntityManager entityManager) {
         this.vProductRepository = vModelRepository;
         this.entityManager = entityManager;
     }
@@ -28,7 +28,7 @@ public class VModelService {
     }
 
     @SuppressWarnings("unchecked")
-    public List<VProduct> getFilteredVModels(List<Long> typeIds, Long categoryId, Double minLocation,
+    public List<VProduct> getFilteredVModels(Long typeId, Long categoryId, Double minLocation,
             Double maxLocation, List<Long> sizeIds, List<Long> colorIds, String keyword) {
 
         StringBuilder sql = new StringBuilder("SELECT DISTINCT ON (model_id) * FROM v_products WHERE 1=1");
@@ -47,9 +47,9 @@ public class VModelService {
             params.put("keyword", "%" + keyword.trim() + "%");
         }
 
-        if (typeIds != null && !typeIds.isEmpty()) {
-            sql.append(" AND type_id IN (:typeIds)");
-            params.put("typeIds", typeIds);
+        if (typeId != null) {
+            sql.append(" AND type_id = :typeId");
+            params.put("typeId", typeId);
         }
         if (categoryId != null) {
             sql.append(" AND category_id = :categoryId");

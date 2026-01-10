@@ -12,7 +12,7 @@
 
             <h1 class="text-2xl font-bold mb-6">Create Model</h1>
 
-            <form action="/admin/models" method="post" class="space-y-4">
+            <form action="/admin/models" method="post" class="space-y-4 w-128">
 
                 <div class="form-control">
                     <label class="label">
@@ -21,20 +21,26 @@
                     <input type="text" name="name" placeholder="Name" class="input input-bordered w-full" required />
                 </div>
 
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Description</span>
+                    </label>
+                    <textarea name="description" placeholder="Description" class="textarea textarea-bordered w-full"
+                        required></textarea>
+                </div>
+
                 <div class="form-control ">
                     <label class="label">
                         <span class="label-text">Type</span>
                     </label>
 
-                    <div class="flex flex-wrap gap-2 border border-base-300 rounded-box p-4">
+                    <div class="p-0 overflow-y-auto">
 
-                        <div class="form-control p-1" th:each="type : ${types}">
-                            <label class="label cursor-pointer justify-start gap-2">
-                                <input type="checkbox" name="typeIds" th:value="${type.id}"
-                                    class="checkbox checkbox-sm" />
-                                <span class="label-text" th:text="${type.name}">Category Name</span>
-                            </label>
-                        </div>
+                        <select name="type" class="select select-bordered w-full" required>
+                            <option disabled selected>Select a type</option>
+                            <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}">
+                            </option>
+                        </select>
 
                     </div>
 
@@ -42,12 +48,12 @@
 
                 <div class="form-control">
                     <label class="label">
-                        <span class="label-text">Categories</span>
+                        <span class="label-text">Category</span>
                     </label>
 
                     <div class="p-0 overflow-y-auto">
-                        <select name="categoryId" class="select select-bordered w-full" required>
-                            <option disabled selected>Select a type</option>
+                        <select name="category" class="select select-bordered w-full" required>
+                            <option disabled selected>Select a category</option>
                             <option th:each="category : ${categories}" th:value="${category.id}"
                                 th:text="${category.name}">
                             </option>

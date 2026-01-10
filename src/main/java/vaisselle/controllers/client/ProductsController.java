@@ -12,30 +12,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import vaisselle.services.CategoryService;
 import vaisselle.services.ColorService;
 import vaisselle.services.ModelService;
-import vaisselle.services.ProductService;
 import vaisselle.services.SizeService;
 import vaisselle.services.TypeService;
-import vaisselle.services.VModelService;
+import vaisselle.services.VProductService;
 
 @Controller
 @RequestMapping("/client/products")
 public class ProductsController {
 
-    private final ProductService productService;
-    private final VModelService vmodelService;
+    private final VProductService vmodelService;
     private final TypeService typeService;
     private final CategoryService categoryService;
     private final SizeService sizeService;
     private final ColorService colorService;
     private final ModelService modelService;
 
-    public ProductsController(ProductService userService, VModelService vmodelService,
+    public ProductsController(VProductService vmodelService,
             TypeService typeService,
             CategoryService categoryService,
             SizeService sizeService,
             ColorService colorService,
             ModelService modelService) {
-        this.productService = userService;
         this.vmodelService = vmodelService;
         this.typeService = typeService;
         this.categoryService = categoryService;
@@ -46,7 +43,7 @@ public class ProductsController {
 
     @GetMapping("")
     public String viewProducts(
-            @RequestParam(required = false) List<Long> typeIds,
+            @RequestParam(required = false) Long typeId,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) Double minLocation,
             @RequestParam(required = false) Double maxLocation,
@@ -60,17 +57,13 @@ public class ProductsController {
         model.addAttribute("sizes", sizeService.getAllSizes());
         model.addAttribute("colors", colorService.getAllColors());
 
-        model.addAttribute("typeIds", typeIds);
+        model.addAttribute("typeId", typeId);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("minLocation", minLocation);
         model.addAttribute("maxLocation", maxLocation);
         model.addAttribute("sizeIds", sizeIds);
         model.addAttribute("colorIds", colorIds);
         model.addAttribute("keyword", keyword);
-
-        if (typeIds != null && typeIds.isEmpty()) {
-            typeIds = null;
-        }
 
         if (sizeIds != null && sizeIds.isEmpty()) {
             sizeIds = null;
@@ -80,10 +73,10 @@ public class ProductsController {
             colorIds = null;
         }
 
-        if ((typeIds != null || categoryId != null || minLocation != null || maxLocation != null || sizeIds != null
+        if ((typeId != null || categoryId != null || minLocation != null || maxLocation != null || sizeIds != null
                 || colorIds != null) || (keyword != null && !keyword.trim().isEmpty())) {
             model.addAttribute("models",
-                    vmodelService.getFilteredVModels(typeIds, categoryId, minLocation, maxLocation, sizeIds, colorIds,
+                    vmodelService.getFilteredVModels(typeId, categoryId, minLocation, maxLocation, sizeIds, colorIds,
                             keyword));
         } else {
             model.addAttribute("models", vmodelService.getAllVModelsDistinct());

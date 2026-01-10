@@ -3,7 +3,7 @@ SELECT
     p.id           AS product_id,
     p.name         AS product_name,
     p.location     AS product_location,
-    p.url          AS product_url,
+    pi.url         AS product_url,
 
     m.id           AS model_id,
     m.name         AS model_name,
@@ -28,17 +28,14 @@ LEFT JOIN t_models m
 LEFT JOIN t_categories c
        ON m.id_category = c.id
 
-LEFT JOIN t_models_types mt
-       ON m.id = mt.id_model
-
 LEFT JOIN t_types t
-       ON mt.id_type = t.id
+       ON m.id_type = t.id
 
 LEFT JOIN t_sizes s
        ON p.id_size = s.id
 
-LEFT JOIN t_products_colors pc
-       ON p.id = pc.id_product
-
 LEFT JOIN t_colors cl
-       ON pc.id_color = cl.id;
+       ON p.id_color = cl.id
+
+LEFT JOIN t_product_images pi
+       ON pi.id_product = p.id AND pi.is_default = TRUE;

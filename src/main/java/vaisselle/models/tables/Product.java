@@ -7,7 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "t_products")
@@ -22,8 +24,8 @@ public class Product {
     @Column(name = "location", nullable = true)
     private double location;
 
-    @Column(name = "url", nullable = true)
-    private String url;
+    @OneToMany(mappedBy = "product")
+    private List<ProductImage> images;
 
     @ManyToOne
     @JoinColumn(name = "idProduct")
@@ -33,8 +35,9 @@ public class Product {
     @JoinColumn(name = "idSize")
     private Size size;
 
-    @jakarta.persistence.OneToMany(mappedBy = "product")
-    private java.util.List<ProductColor> productColors;
+    @ManyToOne
+    @JoinColumn(name = "idColor")
+    private Color color;
 
     public Product() {
     }
@@ -47,12 +50,23 @@ public class Product {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public List<ProductImage> getImages() {
+        return images;
     }
 
-    public void setUrl(String img) {
-        this.url = img;
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
+    }
+
+    public String getDefaultImageUrl() {
+        if (images == null || images.isEmpty()) {
+            return null;
+        }
+        return images.stream()
+                .filter(ProductImage::isDefault)
+                .map(ProductImage::getUrl)
+                .findFirst()
+                .orElse(images.get(0).getUrl());
     }
 
     public Size getSize() {
@@ -61,14 +75,6 @@ public class Product {
 
     public void setSize(Size size) {
         this.size = size;
-    }
-
-    public java.util.List<ProductColor> getProductColors() {
-        return productColors;
-    }
-
-    public void setProductColors(java.util.List<ProductColor> productColors) {
-        this.productColors = productColors;
     }
 
     public String getName() {
@@ -97,7 +103,15 @@ public class Product {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", img=" + url + "]";
+        return "Product [id=" + id + ", name=" + name + "]";
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
 }

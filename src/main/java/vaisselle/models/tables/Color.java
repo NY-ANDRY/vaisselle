@@ -21,7 +21,7 @@ public class Color {
     private String name;
 
     @OneToMany(mappedBy = "color")
-    private List<ProductColor> productColors;
+    private List<Product> product;
 
     public Color() {
     }
@@ -49,5 +49,13 @@ public class Color {
     @Override
     public String toString() {
         return "Color [id=" + id + ", name=" + name + "]";
+    }
+
+    public List<Product> getProduct() {
+        return product;
+    }
+
+    public void setProduct(List<Product> product) {
+        this.product = product;
     }
 }

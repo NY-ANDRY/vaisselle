@@ -1,18 +1,16 @@
 package vaisselle.controllers.admin;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import vaisselle.services.CategoryService;
 import vaisselle.services.ModelService;
 import vaisselle.services.TypeService;
 
-@Controller("AdminProductsController") // Bean name to avoid conflict with Client ProductsController
+@Controller("AdminModelsController") // Bean name to avoid conflict with Client ProductsController
 @RequestMapping("/admin/models")
 public class ModelController {
 
@@ -41,11 +39,8 @@ public class ModelController {
     }
 
     @PostMapping("")
-    public String store(@RequestParam String name, @RequestParam Long categoryId,
-            @RequestParam(required = false) List<Long> typeIds) {
-        
-        modelService.saveModel(name, categoryId, typeIds);
-
+    public String store(@ModelAttribute vaisselle.models.tables.Model model) {
+        modelService.saveModel(model);
         return "redirect:/admin/models";
     }
 }

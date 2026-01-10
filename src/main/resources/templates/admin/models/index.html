@@ -21,6 +21,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Category</th>
+                        <th>Type</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -29,6 +30,7 @@
                         <td th:text="${model.id}">1</td>
                         <td th:text="${model.name}">Product Name</td>
                         <td th:text="${model.category != null ? model.category.name : '-'}">Category</td>
+                        <td th:text="${model.type != null ? model.type.name : '-'}">Type</td>
                         <td>
                             <button class="btn btn-xs btn-ghost">Edit</button>
                         </td>

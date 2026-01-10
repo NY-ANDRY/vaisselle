@@ -16,6 +16,11 @@ public class ClientController {
         return "redirect:/client/products";
     }
 
+    @GetMapping("/")
+    public String indexx() {
+        return "redirect:/client/products";
+    }
+
     @GetMapping("home")
     public String home() {
         return "/client/home";
