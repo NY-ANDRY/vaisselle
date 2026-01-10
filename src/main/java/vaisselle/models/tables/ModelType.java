@@ -9,22 +9,22 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "t_products_categories")
-public class ProductCategory {
+@Table(name = "t_models_types")
+public class ModelType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idProduct")
-    private Product product;
+    @JoinColumn(name = "idModel")
+    private Model model;
 
     @ManyToOne
-    @JoinColumn(name = "idCategory")
-    private Category category;
+    @JoinColumn(name = "idType")
+    private Type type;
 
-    public ProductCategory() {
+    public ModelType() {
     }
 
     public Long getId() {
@@ -33,6 +33,22 @@ public class ProductCategory {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
     @Override

@@ -11,8 +11,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "t_categories")
-public class Category {
+@Table(name = "t_sizes")
+public class Size {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,18 +20,22 @@ public class Category {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    private List<Model> models;
+    @OneToMany(mappedBy = "size")
+    private List<Product> products;
 
-    public Category() {
+    public Size() {
     }
 
-    public Category(String name) {
+    public Size(String name) {
         this.name = name;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -42,14 +46,8 @@ public class Category {
         this.name = name;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + "]";
+        return "Size [id=" + id + ", name=" + name + "]";
     }
-
 }

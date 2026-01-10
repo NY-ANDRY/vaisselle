@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout/layout}">
+
+<head>
+    <title>Models</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Models</h1>
+            <a href="/admin/models/create" class="btn btn-primary btn-sm">Create New</a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="table w-full">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="model : ${models}">
+                        <td th:text="${model.id}">1</td>
+                        <td th:text="${model.name}">Product Name</td>
+                        <td th:text="${model.category != null ? model.category.name : '-'}">Category</td>
+                        <td>
+                            <button class="btn btn-xs btn-ghost">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

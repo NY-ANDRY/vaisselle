@@ -12,7 +12,12 @@ public class ClientController {
     }
 
     @GetMapping("")
-    public String home() {
+    public String index() {
         return "redirect:/client/products";
+    }
+
+    @GetMapping("home")
+    public String home() {
+        return "/client/home";
     }
 }

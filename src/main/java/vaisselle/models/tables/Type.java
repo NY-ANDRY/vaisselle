@@ -2,7 +2,6 @@ package vaisselle.models.tables;
 
 import java.util.List;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,22 +10,21 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "t_categories")
-public class Category {
+@Table(name = "t_types")
+public class Type {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category")
-    private List<Model> models;
+    @OneToMany(mappedBy = "type")
+    private List<ModelType> modelType;
 
-    public Category() {
+    public Type() {
     }
 
-    public Category(String name) {
+    public Type(String name) {
         this.name = name;
     }
 
@@ -45,7 +43,6 @@ public class Category {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     @Override
     public String toString() {

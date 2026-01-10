@@ -2,33 +2,32 @@ package vaisselle.services;
 
 import org.springframework.stereotype.Service;
 
-import vaisselle.models.tables.Product;
-import vaisselle.repositories.ProductRepository;
+import vaisselle.models.tables.Model;
+import vaisselle.repositories.ModelRepository;
 
 import java.util.List;
 
 @Service
 public class ProductService {
 
-    private final ProductRepository productRepository;
-
-    public ProductService(ProductRepository productRepository) {
+    private final ModelRepository productRepository;
+    public ProductService(ModelRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts() {
+    public List<Model> getAllProducts() {
         return productRepository.findAll();
     }
 
-    public Product saveProduct(Product user) {
+    public Model saveProduct(Model user, List<Long> categoryIds) {
         return productRepository.save(user);
     }
 
-    public Product getProduct(Long idProduct) {
+    public Model getProduct(Long idProduct) {
         return productRepository.findById(idProduct).orElse(null);
     }
 
-    public Product updateProduct(Product user) {
+    public Model updateProduct(Model user) {
         return productRepository.save(user);
     }
 }

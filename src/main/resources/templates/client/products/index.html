@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout/layout}">
+<html layout:decorate="~{client/layout/layout}">
 
 <head>
     <title>Users</title>
@@ -7,32 +7,33 @@
 
 <body>
 
-    <div layout:fragment="content" class="flex w-full p-2 gap-4">
+    <div layout:fragment="content" class="flex flex-row w-full h-full max-h-full overflow-hidden gap-4">
 
         <div th:replace="~{client/products/filter :: filter}"></div>
 
-        <div class="flex flex-wrap gap-8">
+        <div class="flex h-fit flex-wrap gap-4">
 
-            <div th:each="model : ${models}" class="card card-sm card-side bg-base-100 w-86 shadow-sm">
-                <figure>
+            <div th:each="model : ${models}" class="flex flex-col px-4 pt-4 pb-4 border border-neutral-200">
 
-                    <img th:if="${model.modelUrl != null && model.modelUrl != ''}" th:src="@{${model.modelUrl}}"
-                        class="w-32 h-42" alt="Movie">
+                <div class="flex item-center justify-center mb-4">
+                    <img th:if="${model.ProductUrl != null && model.ProductUrl != ''}" th:src="@{${model.ProductUrl}}"
+                        class="w-56 h-56" alt="Movie">
 
-                    <img th:unless="${model.modelUrl != null && model.modelUrl != ''}"
-                        th:src="@{/uploads/test/fourchette.jpg}" class="w-32 h-42" alt="Movie">
+                    <img th:unless="${model.ProductUrl != null && model.ProductUrl != ''}"
+                        th:src="@{/uploads/test/fourchette.jpg}" class="w-56 h-56" alt="Movie">
+                </div>
 
-                </figure>
 
-                <div class="card-body w-42">
+                <div class="flex flex-col gap-2">
 
-                    <h2 th:text="${model.modelName}" class="card-title"></h2>
+                    <h2 th:text="${model.modelName}" class=""></h2>
 
-                    <p>...</p>
-
-                    <div class="card-actions justify-end">
+                    <div class="card-actions justify-between items-center">
+                        <div class="flex items-center gap-2 text-sm">
+                            <span th:text="${model.productLocation + ' Ar / j'}"></span>
+                        </div>
                         <a th:href="@{/client/products/{id}(id=${model.modelId})}">
-                            <button class="btn btn-xs btn-primary">Watch</button>
+                            <button class="btn btn-sm btn-soft rounded-xs text-neutral-600 px-8">More</button>
                         </a>
                     </div>
 

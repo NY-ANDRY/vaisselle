@@ -1,5 +1,7 @@
 package vaisselle.models.tables;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,38 +22,77 @@ public class Model {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "location", nullable = true)
-    private double location;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
-    @Column(name = "url", nullable = true)
-    private String url;
+    @OneToMany(mappedBy = "model")
+    private List<ModelType> modelstypes;
+
+    @OneToMany(mappedBy = "product")
+    private List<Product> products;
 
     @ManyToOne
-    @JoinColumn(name = "idProduct")
-    private Product product;
+    @JoinColumn(name = "idCategory")
+    private Category category;
 
     public Model() {
+    }
+
+    public Model(String name) {
+        this.name = name;
     }
 
     public Long getId() {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<ModelType> getModelstypes() {
+        return modelstypes;
+    }
+
+    public void setModelstypes(List<ModelType> modelstypes) {
+        this.modelstypes = modelstypes;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String img) {
-        this.url = img;
-    }
-
     @Override
     public String toString() {
-        return "User [id=" + id + ", img=" + url + "]";
+        return "User [id=" + id + ", name=" + name + "]";
     }
 
 }
