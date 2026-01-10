@@ -7,39 +7,50 @@
 
 <body>
 
-    <div layout:fragment="content" class="flex flex-row w-full h-full max-h-full overflow-hidden gap-4">
+    <div layout:fragment="content" class="flex flex-col w-full h-full max-h-full overflow-hidden gap-4">
 
-        <div th:replace="~{client/products/filter :: filter}"></div>
+        <div class="flex">
+            <div class="breadcrumbs text-sm">
+                <ul>
+                    <li><a>Home</a></li>
+                    <li><a>Products</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="flex gap-4">
+            <div th:replace="~{client/products/filter :: filter}"></div>
 
-        <div class="flex h-fit flex-wrap gap-4">
+            <div class="flex h-fit flex-wrap gap-4 max-h-full overflow-hidden overflow-y-auto">
 
-            <div th:each="model : ${models}" class="flex flex-col px-4 pt-4 pb-4 border border-neutral-200">
+                <div th:each="model : ${models}"
+                    class="flex flex-col px-4 pt-4 pb-4 bg-[#f8f8f8] border border-neutral-100">
 
-                <div class="flex item-center justify-center mb-4">
-                    <img th:if="${model.ProductUrl != null && model.ProductUrl != ''}" th:src="@{${model.ProductUrl}}"
-                        class="w-56 h-56" alt="Movie">
+                    <div class="flex item-center justify-center mb-4">
+                        <img th:if="${model.ProductUrl != null && model.ProductUrl != ''}"
+                            th:src="@{${model.ProductUrl}}" class="w-56 h-56" alt="Movie">
 
-                    <img th:unless="${model.ProductUrl != null && model.ProductUrl != ''}"
-                        th:src="@{/uploads/test/fourchette.jpg}" class="w-56 h-56" alt="Movie">
-                </div>
-
-
-                <div class="flex flex-col gap-2">
-
-                    <h2 th:text="${model.modelName}" class=""></h2>
-
-                    <div class="card-actions justify-between items-center">
-                        <div class="flex items-center gap-2 text-sm">
-                            <span th:text="${model.productLocation + ' Ar / j'}"></span>
-                        </div>
-                        <a th:href="@{/client/products/{id}(id=${model.modelId})}">
-                            <button class="btn btn-sm btn-soft rounded-xs text-neutral-600 px-8">More</button>
-                        </a>
+                        <img th:unless="${model.ProductUrl != null && model.ProductUrl != ''}"
+                            th:src="@{/uploads/test/fourchette.jpg}" class="w-56 h-56" alt="Movie">
                     </div>
 
-                </div>
-            </div>
 
+                    <div class="flex flex-col gap-2">
+
+                        <h2 th:text="${model.modelName}" class=""></h2>
+
+                        <div class="card-actions justify-between items-center">
+                            <div class="flex items-center gap-2 text-sm">
+                                <span th:text="${model.productLocation + ' Ar / j'}"></span>
+                            </div>
+                            <a th:href="@{/client/products/{id}(id=${model.modelId})}">
+                                <button class="btn btn-sm btn-soft rounded-xs text-neutral-600 px-8">More</button>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
         </div>
 
 
