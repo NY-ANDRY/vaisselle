@@ -27,6 +27,8 @@ public class ModelController {
 
     @GetMapping("")
     public String index(org.springframework.ui.Model model) {
+        model.addAttribute("types", matiereService.getAllTypes());
+        model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("models", modelService.getAllModels());
         return "admin/models/index";
     }

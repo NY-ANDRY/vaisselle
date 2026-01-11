@@ -38,4 +38,5 @@ LEFT JOIN t_colors cl
        ON p.id_color = cl.id
 
 LEFT JOIN t_product_images pi
-       ON pi.id_product = p.id AND pi.is_default = TRUE;
+       ON pi.id_product = p.id AND pi.is_default = TRUE
+WHERE p.deleted_at IS NULL;

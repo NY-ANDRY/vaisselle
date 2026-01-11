@@ -16,7 +16,7 @@ import vaisselle.models.tables.User;
 import vaisselle.services.FileService;
 import vaisselle.services.UserService;
 
-@Controller
+@Controller("UserBackController")
 @RequestMapping("/admin/users")
 public class UserController {
 

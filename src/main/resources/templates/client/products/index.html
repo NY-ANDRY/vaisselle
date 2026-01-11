@@ -9,9 +9,9 @@
 
     <div layout:fragment="content" class="flex flex-col w-full h-full max-h-full gap-4">
 
-        <div class="flex gap-4 max-h-full">
+        <div class="flex gap-8 max-h-full">
 
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-4">
 
                 <div class="h-8 min-h-8 max-h-2">
                     <div class="breadcrumbs text-sm">
@@ -28,15 +28,15 @@
 
             </div>
 
-            <div class="flex flex-col gap-2 max-h-full">
+            <div class="flex flex-col gap-4 max-h-full">
 
                 <div class="h-8 min-h-8 max-h-2">
                 </div>
 
-                <div class="flex h-fit flex-wrap gap-4 pb-8 max-h-full overflow-hidden overflow-y-auto">
+                <div class="flex h-fit flex-wrap gap-8 pb-8 max-h-full overflow-hidden overflow-y-auto">
 
                     <div th:each="model : ${models}"
-                        class="flex flex-col p-4 bg-base-100 rounded-3xl border border-neutral-100">
+                        class="flex flex-col p-5 w-76 bg-base-100 rounded-3xl border border-neutral-100">
 
                         <div class="relative flex item-center justify-center mb-4">
                             <div class="absolute right-2 top-2 flex gap-2">
@@ -45,17 +45,17 @@
                             </div>
 
                             <img th:if="${model.ProductUrl != null && model.ProductUrl != ''}"
-                                th:src="@{${model.ProductUrl}}" class="w-72 h-72 rounded-3xl" alt="Movie">
+                                th:src="@{${model.ProductUrl}}" class="w-66 h-66 rounded-3xl" alt="Movie">
 
                             <img th:unless="${model.ProductUrl != null && model.ProductUrl != ''}"
-                                th:src="@{/uploads/test/fourchette.jpg}" class="w-72 h-72 rounded-3xl" alt="Movie">
+                                th:src="@{/uploads/test/fourchette.jpg}" class="w-66 h-66 rounded-3xl" alt="Movie">
                         </div>
 
                         <div class="flex flex-col gap-1">
 
                             <div class="flex flex-col item-center justify-between gap-1">
                                 <div class="flex item-center justify-between">
-                                    <h2 th:text="${model.modelName}" class="font-[biotif-m]"></h2>
+                                    <h2 th:text="${model.modelName}" class="font-[figtree-m]"></h2>
 
                                     <div class="flex items-center gap-2 text-sm text-neutral-400">
                                         <span th:text="${model.productLocation + ' Ar / j'}"></span>
@@ -76,8 +76,8 @@
 
                             <a th:href="@{/client/products/{id}(id=${model.modelId})}" class="mt-2">
                                 <button
-                                    class="cursor-pointer hover:text-neutral-50 hover:bg-neutral-800 w-full font-[biotif-l] 
-                                    text-sm text-neutral-900 border-1 border-neutral-200 w-full rounded-full py-1.5 px-8 transition-all">More</button>
+                                    class="cursor-pointer hover:text-neutral-50 hover:bg-neutral-800 w-full font-[figtree] 
+                                    text-sm text-neutral-900 border-1 border-neutral-200 rounded-full py-1.5 px-8 transition-all">More</button>
                             </a>
 
                         </div>

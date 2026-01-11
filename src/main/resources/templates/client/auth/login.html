@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html layout:decorate="~{client/layout/layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>login</title>
+</head>
+
+<body>
+
+    <div class="flex flex-col h-full">
+        <div th:if="${error != null}" class="flex">
+            <div th:text="${error}" class="flex"></div>
+        </div>
+
+        <h1 class="pt-8 p-4 pb-4 text-2xl font-[figtree-sb]">Log in</h1>
+
+        <div class="flex flex-col justify-between h-full">
+            <form action="/client/auth/login" method="post" class="fieldset rounded-box p-4 gap-2">
+                <fieldset class="fieldset">
+                    <label class="label text-neutral-400">Name</label>
+                    <input name="name" class="input validator w-full py-6" placeholder="Name" value="abc" />
+                    <p class="validator-hint hidden">Required</p>
+                </fieldset>
+
+                <label class="fieldset">
+                    <span class="label text-neutral-400">Password</span>
+                    <input type="password" class="input validator w-full py-6" placeholder="Password" value="abc" />
+                    <span class="validator-hint hidden">Required</span>
+                </label>
+
+                <label class="label py-4 pt-2">
+                    <input type="checkbox" checked="checked" class="checkbox" />
+                    Remember me
+                </label>
+
+                <button class="btn btn-neutral mt-2 py-6" type="submit">Login</button>
+                <button class="btn btn-ghost mt-1 py-6" type="reset">Reset</button>
+                <div class="flex flex-row-reverse text-sm underline cursor-pointer">Forgot your password?</div>
+            </form>
+
+            <div class="flex flex-col p-4 gap-4">
+                <div class="flex text-sm text-neutral-500">Or Sign in with</div>
+                <div class="flex gap-4 items-stretch">
+                    <div
+                        class="relative flex gap-2 flex-1 justify-center items-center text-sm px-8 py-3 border border-neutral-200 rounded-md cursor-pointer hover:bg-neutral-100 transition-all">
+                        <div class="relative text-xl font-[figtree-b] bottom-0.5">G</div>
+                        <div>Google</div>
+                    </div>
+                    <div
+                        class="relative flex gap-2 flex-1 justify-center items-center text-sm px-8 py-3 border border-neutral-200 rounded-md cursor-pointer hover:bg-neutral-100 transition-all">
+                        <div class="relative text-xl font-[figtree-b] bottom-0.5">F</div>
+                        <div>Facebook</div>
+                    </div>
+                    <div
+                        class="relative flex gap-2 flex-1 justify-center items-center text-sm px-8 py-3 border border-neutral-200 rounded-md cursor-pointer hover:bg-neutral-100 transition-all">
+                        <div class="relative text-xl font-[figtree-b] bottom-0.5">X</div>
+                        <div>Twitter</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

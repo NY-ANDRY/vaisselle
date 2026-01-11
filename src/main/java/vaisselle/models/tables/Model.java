@@ -29,7 +29,7 @@ public class Model {
     @JoinColumn(name = "id_type")
     private Type type;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "model")
     private List<Product> products;
 
     @ManyToOne

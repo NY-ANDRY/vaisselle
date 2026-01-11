@@ -62,5 +62,6 @@
     (8, '/uploads/test/assiette.jpg', TRUE);
 
     INSERT INTO t_users (name, img) VALUES
+    ('abc', '/uploads/test/user.jpg'),
     ('Admin', 'admin.png'),
     ('Client Test', 'client.png');

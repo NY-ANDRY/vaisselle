@@ -15,6 +15,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public User login(User user) {
+        if (user == null) {
+            return null;
+        }
+        return userRepository.login(user.getName()).orElse(null);
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

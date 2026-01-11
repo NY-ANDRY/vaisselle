@@ -5,31 +5,31 @@
 
     <header class="flex justify-between items-center text-sm h-20 px-32 py-4">
 
-        <div class="text-xl font-[biotif-sb] text-neutral-800">
-            <a href="/">
+        <div class="text-2xl font-[figtree-sb] text-neutral-800">
+            <a href="/admin">
                 Vaisselle
             </a>
         </div>
 
-        <div class="text-base flex items-center gap-2 capitalize h-full text font-[biotif]">
+        <div class="text-base flex items-center gap-2 capitalize h-full text font-[figtree]">
             <a href="/client/home"
-                th:classappend="${uri.endsWith('/client/home')} ? 'text-neutral-900 bg-neutral-800 text-white font-[biotif]' : 'text-neutral-900'"
+                th:classappend="${uri.endsWith('/client/home')} ? 'text-neutral-900 bg-neutral-800 text-white font-[figtree]' : 'text-neutral-900'"
                 class="relative h-full flex items-center justify-center px-6 rounded-full hover:bg-neutral-200 transition-all">
                 <span class="relative top-px">Home</span>
             </a>
             <a href="/client/products"
-                th:classappend="${uri.endsWith('/client/products')} ? 'text-neutral-900 bg-neutral-800 text-white font-[biotif]' : 'text-neutral-900'"
+                th:classappend="${uri.endsWith('/client/products')} ? 'text-neutral-900 bg-neutral-800 text-white font-[figtree]' : 'text-neutral-900'"
                 class="relative h-full flex items-center justify-center px-6 rounded-full hover:bg-neutral-200 transition-all">
                 <span class="relative top-px">Products</span>
             </a>
             <a href="/client/about"
-                th:classappend="${uri.endsWith('/client/about')} ? 'text-neutral-900 bg-neutral-800 text-white font-[biotif]' : 'text-neutral-900'"
+                th:classappend="${uri.endsWith('/client/about')} ? 'text-neutral-900 bg-neutral-800 text-white font-[figtree]' : 'text-neutral-900'"
                 class="relative h-full flex items-center justify-center px-6 rounded-full hover:bg-neutral-200 transition-all">
                 <span class="relative top-px">about</span>
             </a>
         </div>
 
-        <div class="flex items-center gap-1">
+        <div class="flex items-center gap-2">
 
             <a href="#">
                 <div
@@ -43,17 +43,36 @@
                 </div>
             </a>
 
-            <a href="#">
-                <div
-                    class="flex p-2 rounded-sm hover:bg-neutral-100 active:bg-neutral-200 transition-all cursor-pointer">
+            <div th:if="${user == null}">
+                <label for="login_popup"
+                    class="flex items-center justify-center p-2 rounded-sm hover:bg-neutral-100 active:bg-neutral-200 transition-all cursor-pointer">
                     <svg class="stroke-neutral-800 w-6 h-6" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M18 19C18 16.7909 15.3137 15 12 15C8.68629 15 6 16.7909 6 19M12 12C9.79086 12 8 10.2091 8 8C8 5.79086 9.79086 4 12 4C14.2091 4 16 5.79086 16 8C16 10.2091 14.2091 12 12 12Z"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
+                </label>
+
+                <input type="checkbox" id="login_popup" class="modal-toggle" />
+                <div class="modal" role="dialog">
+                    <div class="modal-box rounded-3xl w-full h-172">
+                       <div th:replace="~{client/auth/login :: div}"></div>
+                    </div>
+                    <label class="modal-backdrop" for="login_popup">Close</label>
                 </div>
-            </a>
+            </div>
+
+            <div th:if="${user != null}"
+                class="dropdown dropdown-bottom dropdown-end w-10 min-w-10 max-w-10 h-10 cursor-pointer">
+                <div tabindex="0" role="button" class="m-1">
+                    <img th:src="${user.img}" class=" rounded-full" alt="user">
+                </div>
+                <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="/client/auth/logout">logout</a></li>
+                </ul>
+            </div>
 
         </div>
 

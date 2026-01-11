@@ -3,40 +3,58 @@
 
 <body>
 
-    <aside class="flex flex-col pt-0 ">
-        <div class="flex">
-            <a href="/" class="pl-4 font-medium text-3xl py-2">Vaisselle</a>
+    <aside class="flex flex-col w-70">
+
+        <div class="flex w-full bg-neutral-900 text-neutral-200 rounded-xl p-0.5">
+            <div
+                class="flex items-center w-full gap-3 text-xl px-2 py-1.5 cursor-pointer bg-neutral-900 rounded-xl text-neutral-200 border-1 border-transparent hover:border-neutral-300 transition-all">
+                <img src="/uploads/test/user.jpg" class="w-9 h-9 rounded-lg" alt="">
+
+                <div class="flex">
+                    <div class="flex flex-col">
+                        <div class="text-base font-[figtree-m] capitalize text-neutral-100">admin 001</div>
+                        <div class="text-sm text-neutral-300">hehe</div>
+                    </div>
+                    <div class="flex"></div>
+                </div>
+            </div>
         </div>
-        <div class="h-4"></div>
 
+        <div class="h-2"></div>
 
-        <ul class="menu flex-1 w-72 p-2 flex flex-col justify-between">
+        <ul class="menu flex-1 w-full px-0 py-2 flex flex-col justify-between text-neutral-700">
 
-            <li>
-                <details>
-                    <summary>user</summary>
-                    <ul class="p-2">
-                        <li><a href="/admin/users">users</a></li>
-                        <li><a href="/admin/users/create">create</a></li>
-                    </ul>
-                </details>
+            <div class="flex flex-col gap-0.5">
 
-                <details open>
-                    <summary>models</summary>
-                    <ul class="p-2">
-                        <li><a href="/admin/models">models</a></li>
-                        <li><a href="/admin/models/create">create</a></li>
-                    </ul>
-                </details>
+                <div class="flex items-center gap-4 rounded-lg px-4 py-2 bg-neutral-200 mt-2 mb-4">
+                    <svg class="w-4 h-4 stroke-neutral-800" viewBox="0 0 41 41" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M33 33L40 40M19.6667 38.3333C9.35735 38.3333 1 29.976 1 19.6667C1 9.35735 9.35735 1 19.6667 1C29.976 1 38.3333 9.35735 38.3333 19.6667C38.3333 29.976 29.976 38.3333 19.6667 38.3333Z"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
 
-                <details open>
-                    <summary>test</summary>
-                    <ul class="p-2">
-                        <li><a href="/admin/session">session</a></li>
-                    </ul>
-                </details>
-            </li>
-            <li class="mt-4 border-t pt-2">
+                    <input type="text" class="border-0 outline-0 w-full text-base" placeholder="Search">
+                </div>
+
+                <a href="/admin/users">
+                    <div class="flex items-center rounded-lg px-4 py-2 hover:bg-neutral-300">User</div>
+                </a>
+
+                <a href="/admin/models">
+                    <div class="flex items-center rounded-lg px-4 py-2 hover:bg-neutral-300">Model</div>
+                </a>
+
+                <a href="/admin/products">
+                    <div class="flex items-center rounded-lg px-4 py-2 hover:bg-neutral-300">Product</div>
+                </a>
+
+                <a href="/admin/session">
+                    <div class="flex items-center rounded-lg px-4 py-2 hover:bg-neutral-300">Session</div>
+                </a>
+            </div>
+
+            <li class="mt-4 pt-2">
                 <a href="/client" class="font-bold">client</a>
             </li>
 

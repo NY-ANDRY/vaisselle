@@ -1,41 +1,41 @@
 @font-face {
-  font-family: "biotif";
-  src: url("../font/Biotif-Regular.ttf") format("truetype");
+  font-family: "figtree";
+  src: url("../font/Figtree-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "biotif-b";
-  src: url("../font/Biotif-Bold.ttf") format("truetype");
+  font-family: "figtree-b";
+  src: url("../font/Figtree-Bold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "biotif-m";
-  src: url("../font/Biotif-Medium.ttf") format("truetype");
+  font-family: "figtree-m";
+  src: url("../font/Figtree-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "biotif-sb";
-  src: url("../font/Biotif-SemiBold.ttf") format("truetype");
+  font-family: "figtree-sb";
+  src: url("../font/Figtree-SemiBold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "biotif-ex";
-  src: url("../font/Biotif-ExtraBold.ttf") format("truetype");
+  font-family: "figtree-bl";
+  src: url("../font/Figtree-Black.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "biotif-l";
-  src: url("../font/Biotif-Light.ttf") format("truetype");
+  font-family: "figtree-i";
+  src: url("../font/Figtree-Italic.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }

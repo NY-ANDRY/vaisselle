@@ -9,3 +9,4 @@ CREATE TABLE t_product_images (
 );
 
 ALTER TABLE t_products DROP COLUMN url;
+ALTER TABLE t_products ADD COLUMN deleted_at TIMESTAMP;

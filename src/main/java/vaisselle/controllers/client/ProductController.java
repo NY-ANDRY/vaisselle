@@ -18,7 +18,7 @@ import vaisselle.services.VProductService;
 
 @Controller
 @RequestMapping("/client/products")
-public class ProductsController {
+public class ProductController {
 
     private final VProductService vmodelService;
     private final TypeService typeService;
@@ -27,7 +27,7 @@ public class ProductsController {
     private final ColorService colorService;
     private final ModelService modelService;
 
-    public ProductsController(VProductService vmodelService,
+    public ProductController(VProductService vmodelService,
             TypeService typeService,
             CategoryService categoryService,
             SizeService sizeService,

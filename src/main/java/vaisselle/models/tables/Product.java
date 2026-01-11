@@ -9,10 +9,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.SQLRestriction;
+import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "t_products")
+@SQLRestriction("deleted_at IS NULL")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +35,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "idProduct")
-    private Model product;
+    private Model model;
 
     @ManyToOne
     @JoinColumn(name = "idSize")
@@ -38,6 +44,12 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "idColor")
     private Color color;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @Transient
+    private String image;
 
     public Product() {
     }
@@ -69,6 +81,17 @@ public class Product {
                 .orElse(images.get(0).getUrl());
     }
 
+    public String getImage() {
+        if (image == null) {
+            image = getDefaultImageUrl();
+        }
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Size getSize() {
         return size;
     }
@@ -93,12 +116,12 @@ public class Product {
         this.location = location;
     }
 
-    public Model getProduct() {
-        return product;
+    public Model getModel() {
+        return model;
     }
 
-    public void setProduct(Model product) {
-        this.product = product;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
     @Override
@@ -112,6 +135,14 @@ public class Product {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
 }

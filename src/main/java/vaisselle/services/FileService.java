@@ -37,4 +37,19 @@ public class FileService {
         return result;
     }
 
+    public boolean deleteFile(String relativePath) {
+        if (relativePath == null || relativePath.isEmpty()) {
+            return false;
+        }
+        try {
+            String filePath = System.getProperty("user.dir") + relativePath;
+            File file = new File(filePath);
+            if (file.exists()) {
+                return file.delete();
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
 }

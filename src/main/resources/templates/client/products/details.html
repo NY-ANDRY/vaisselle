@@ -37,10 +37,10 @@
                         class="card bg-base-100 shadow-sm border border-neutral-200">
                         <figure class="px-4 pt-4">
 
-                            <img th:if="${product.defaultImageUrl != null && product.defaultImageUrl != ''}"
-                                th:src="@{${product.defaultImageUrl}}" class="rounded-xl h-48 w-full object-cover"
+                            <img th:if="${product.image != null && product.image != ''}"
+                                th:src="@{${product.image}}" class="rounded-xl h-48 w-full object-cover"
                                 alt="Product Image">
-                            <img th:unless="${product.defaultImageUrl != null && product.defaultImageUrl != ''}"
+                            <img th:unless="${product.image != null && product.image != ''}"
                                 th:src="@{/uploads/test/fourchette.jpg}" class="rounded-xl h-48 w-full object-cover"
                                 alt="Default Image">
 

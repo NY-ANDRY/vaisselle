@@ -3,8 +3,6 @@ package vaisselle.services;
 import org.springframework.stereotype.Service;
 
 import vaisselle.models.tables.Model;
-import vaisselle.models.tables.Type;
-import vaisselle.models.tables.Category;
 import vaisselle.repositories.ModelRepository;
 
 import java.util.List;
@@ -13,14 +11,9 @@ import java.util.List;
 public class ModelService {
 
     private final ModelRepository modelRepository;
-    private final TypeService typeService;
-    private final CategoryService categoryService;
 
-    public ModelService(ModelRepository modelRepository,
-            TypeService typeService, CategoryService categoryService) {
+    public ModelService(ModelRepository modelRepository) {
         this.modelRepository = modelRepository;
-        this.typeService = typeService;
-        this.categoryService = categoryService;
     }
 
     public List<Model> getAllModels() {

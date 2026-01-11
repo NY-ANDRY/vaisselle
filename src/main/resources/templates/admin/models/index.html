@@ -7,36 +7,44 @@
 
 <body>
 
-    <div layout:fragment="content">
+    <div layout:fragment="content" class="flex gap-8">
 
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-2xl font-bold">Models</h1>
-            <a href="/admin/models/create" class="btn btn-primary btn-sm">Create New</a>
+        <div class="flex flex-col flex-1">
+
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-xl  font-[figtree-m]">Models</h1>
+                <a href="/admin/models/create" class="btn btn-primary btn-sm">Create New</a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="table w-full">
+                    <thead class="bg-neutral-50 border-t border-neutral-100">
+                        <tr class="">
+                            <th class="font-[figtree]">Model ID</th>
+                            <th class="font-[figtree]">Name</th>
+                            <th class="font-[figtree]">Category</th>
+                            <th class="font-[figtree]">Type</th>
+                            <th class="font-[figtree]">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="model : ${models}">
+                            <td th:text="${'#' + model.id}">1</td>
+                            <td th:text="${model.name}">Product Name</td>
+                            <td th:text="${model.category != null ? model.category.name : '-'}">Category</td>
+                            <td th:text="${model.type != null ? model.type.name : '-'}">Type</td>
+                            <td>
+                                <button class="btn btn-xs btn-ghost">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="table w-full">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="model : ${models}">
-                        <td th:text="${model.id}">1</td>
-                        <td th:text="${model.name}">Product Name</td>
-                        <td th:text="${model.category != null ? model.category.name : '-'}">Category</td>
-                        <td th:text="${model.type != null ? model.type.name : '-'}">Type</td>
-                        <td>
-                            <button class="btn btn-xs btn-ghost">Edit</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="flex flex-col">
+            <div th:replace="~{admin/models/createInner :: div}"></div>
         </div>
 
     </div>
