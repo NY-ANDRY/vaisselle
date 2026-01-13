@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import vaisselle.models.tables.Product;
+import vaisselle.services.CategoryService;
 import vaisselle.services.ColorService;
 import vaisselle.services.FileService;
 import vaisselle.services.ModelService;
 import vaisselle.services.ProductService;
 import vaisselle.services.ProductImageService;
 import vaisselle.services.SizeService;
+import vaisselle.services.TypeService;
 import vaisselle.models.tables.ProductImage;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,24 +32,42 @@ public class ProductController {
     private final SizeService sizeService;
     private final ColorService colorService;
     private final FileService fileService;
+    private final CategoryService categoryService;
+    private final TypeService typeService;
 
     public ProductController(ProductService productService, ProductImageService productImageService,
-            ModelService modelService, SizeService sizeService, ColorService colorService, FileService fileService) {
+            ModelService modelService, SizeService sizeService, ColorService colorService, FileService fileService,
+            CategoryService categoryService, TypeService typeService) {
         this.productService = productService;
         this.productImageService = productImageService;
         this.modelService = modelService;
         this.sizeService = sizeService;
         this.colorService = colorService;
         this.fileService = fileService;
+        this.categoryService = categoryService;
+        this.typeService = typeService;
     }
 
     @GetMapping("")
-    public String index(Model model, @RequestParam(required = false) Long editId) {
-        model.addAttribute("products", productService.getAllProducts());
+    public String index(Model model,
+            @RequestParam(required = false) Long editId,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Long typeId,
+            @RequestParam(required = false) Long colorId,
+            @RequestParam(required = false) Long sizeId) {
+        model.addAttribute("products", productService.getFilteredProducts(categoryId, typeId, colorId, sizeId));
         model.addAttribute("models", modelService.getAllModels());
         model.addAttribute("sizes", sizeService.getAllSizes());
         model.addAttribute("colors", colorService.getAllColors());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("types", typeService.getAllTypes());
         model.addAttribute("product", new Product());
+
+        model.addAttribute("categoryId", categoryId);
+        model.addAttribute("typeId", typeId);
+        model.addAttribute("colorId", colorId);
+        model.addAttribute("sizeId", sizeId);
+
         if (editId != null) {
             model.addAttribute("editProduct", productService.getProduct(editId));
         }

@@ -39,4 +39,11 @@ public class ProductService {
             productRepository.save(product);
         }
     }
+
+    public List<Product> getFilteredProducts(Long categoryId, Long typeId, Long colorId, Long sizeId) {
+        if (categoryId == null && typeId == null && colorId == null && sizeId == null) {
+            return getAllProducts();
+        }
+        return productRepository.filter(categoryId, typeId, colorId, sizeId);
+    }
 }

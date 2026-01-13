@@ -13,7 +13,32 @@
 
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-xl font-[figtree-m]">Products</h1>
-                <a href="/admin/products" class="btn btn-primary btn-sm">Create New</a>
+                <div class="flex gap-2">
+                    <form action="/admin/products" method="get" class="flex gap-2">
+                        <select name="categoryId" class="select select-sm select-bordered font-[figtree]">
+                            <option value="">All Categories</option>
+                            <option th:each="category : ${categories}" th:value="${category.id}"
+                                th:text="${category.name}" th:selected="${category.id == categoryId}">Category</option>
+                        </select>
+                        <select name="typeId" class="select select-sm select-bordered font-[figtree]">
+                            <option value="">All Types</option>
+                            <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}"
+                                th:selected="${type.id == typeId}">Type</option>
+                        </select>
+                        <select name="colorId" class="select select-sm select-bordered font-[figtree]">
+                            <option value="">All Colors</option>
+                            <option th:each="color : ${colors}" th:value="${color.id}" th:text="${color.name}"
+                                th:selected="${color.id == colorId}">Color</option>
+                        </select>
+                        <select name="sizeId" class="select select-sm select-bordered font-[figtree]">
+                            <option value="">All Sizes</option>
+                            <option th:each="size : ${sizes}" th:value="${size.id}" th:text="${size.name}"
+                                th:selected="${size.id == sizeId}">Size</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-ghost border-neutral-200">Filter</button>
+                    </form>
+                    <a href="/admin/products" class="btn btn-primary btn-sm">Create New</a>
+                </div>
             </div>
 
             <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100">
@@ -55,12 +80,11 @@
                             </td>
                             <td class="font-[figtree]">
                                 <div class="flex flex-wrap gap-1">
-                                    <div class="badge badge-ghost badge-sm font-[figtree]"
-                                        th:each="variant : ${product.variants}">
-                                        <div class="flex" th:text="${variant.color.name}">
-                                        </div>
-                                        <div class="flex" th:text="${variant.size.name}">
-                                        </div>
+                                    <div class="badge badge-sm badge-soft font-[figtree] "
+                                        th:each="variant : ${product.variants}"
+                                        th:classappend="${variant.id == product.id} ? ' badge-primary' : ' badge-ghost'">
+                                        <span th:text="${variant.color.name}"></span>
+                                        <span th:text="${variant.size.name}"></span>
                                     </div>
                                 </div>
                             </td>
@@ -76,7 +100,8 @@
                                     </a>
                                     <form th:action="@{/admin/products/{id}/delete(id=${product.id})}" method="post"
                                         onsubmit="return confirm('Etes vous sur de vouloir supprimer ?')">
-                                        <button type="submit" class="btn btn-sm border-neutral-100 text-neutral-700 text-error">delete</button>
+                                        <button type="submit"
+                                            class="btn btn-sm border-neutral-100 text-neutral-700 text-error">delete</button>
                                     </form>
                                 </div>
                             </td>

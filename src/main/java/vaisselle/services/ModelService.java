@@ -35,4 +35,11 @@ public class ModelService {
     public void deleteModel(Long idModel) {
         modelRepository.deleteById(idModel);
     }
+
+    public List<Model> getFilteredModels(Long typeId, Long categoryId) {
+        if (typeId == null && categoryId == null) {
+            return getAllModels();
+        }
+        return modelRepository.filter(typeId, categoryId);
+    }
 }

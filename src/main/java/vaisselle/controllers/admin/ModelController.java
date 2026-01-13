@@ -38,10 +38,15 @@ public class ModelController {
     }
 
     @GetMapping("")
-    public String index(org.springframework.ui.Model model, @RequestParam(required = false) Long editId) {
+    public String index(org.springframework.ui.Model model,
+            @RequestParam(required = false) Long editId,
+            @RequestParam(required = false) Long typeId,
+            @RequestParam(required = false) Long categoryId) {
         model.addAttribute("types", matiereService.getAllTypes());
         model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("models", modelService.getAllModels());
+        model.addAttribute("models", modelService.getFilteredModels(typeId, categoryId));
+        model.addAttribute("typeId", typeId);
+        model.addAttribute("categoryId", categoryId);
         if (editId != null) {
             model.addAttribute("editModel", modelService.getModel(editId));
         }

@@ -12,8 +12,23 @@
         <div class="flex flex-col flex-1 max-h-full overflow-auto overflow-y-auto">
 
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-xl  font-[figtree-m]">Models</h1>
-                <a href="/admin/models" class="btn btn-primary btn-sm">Create New</a>
+                <h1 class="text-xl font-[figtree-m]">Models</h1>
+                <div class="flex gap-2">
+                    <form action="/admin/models" method="get" class="flex gap-2">
+                        <select name="typeId" class="select select-sm select-bordered font-[figtree]">
+                            <option value="">All Types</option>
+                            <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}"
+                                th:selected="${type.id == typeId}">Type</option>
+                        </select>
+                        <select name="categoryId" class="select select-sm select-bordered font-[figtree]">
+                            <option value="">All Categories</option>
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
+                                th:selected="${category.id == categoryId}">Category</option>
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-ghost border-neutral-200">Filter</button>
+                    </form>
+                    <a href="/admin/models" class="btn btn-primary btn-sm">Create New</a>
+                </div>
             </div>
 
             <div class="overflow-x-auto">
