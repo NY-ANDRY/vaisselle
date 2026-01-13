@@ -18,11 +18,17 @@ public class VProduct {
     @Column(name = "product_name")
     private String productName;
 
+    @Column(name = "product_description")
+    private String productDescription;
+
+    @Column(name = "product_image_url")
+    private String productImageUrl;
+
     @Column(name = "product_location")
     private Double productLocation;
 
-    @Column(name = "product_url")
-    private String productUrl;
+    @Column(name = "deleted_at")
+    private java.time.LocalDateTime deletedAt;
 
     @Column(name = "model_id")
     private Long modelId;
@@ -57,6 +63,8 @@ public class VProduct {
     @Column(name = "color_name")
     private String colorName;
 
+    /* ================= GETTERS ================= */
+
     public Long getProductId() {
         return productId;
     }
@@ -65,12 +73,8 @@ public class VProduct {
         return productName;
     }
 
-    public Double getProductLocation() {
-        return productLocation;
-    }
-
-    public String getProductUrl() {
-        return productUrl;
+    public java.time.LocalDateTime getDeletedAt() {
+        return deletedAt;
     }
 
     public Long getModelId() {
@@ -101,6 +105,14 @@ public class VProduct {
         return typeName;
     }
 
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public Double getProductLocation() {
+        return productLocation;
+    }
+
     public Long getSizeId() {
         return sizeId;
     }
@@ -117,4 +129,7 @@ public class VProduct {
         return colorName;
     }
 
+    public String getProductImageUrl() {
+        return productImageUrl;
+    }
 }

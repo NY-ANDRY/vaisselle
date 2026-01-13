@@ -50,4 +50,14 @@ public class Size {
     public String toString() {
         return "Size [id=" + id + ", name=" + name + "]";
     }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+ 
 }

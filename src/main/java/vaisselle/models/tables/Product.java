@@ -1,5 +1,11 @@
 package vaisselle.models.tables;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.annotations.SQLRestriction;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,16 +15,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import org.hibernate.annotations.SQLRestriction;
-import org.springframework.data.annotation.Transient;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "t_products")
 @SQLRestriction("deleted_at IS NULL")
+
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,23 +29,26 @@ public class Product {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "location", nullable = true)
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "location", nullable = false)
     private double location;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductImage> images;
-
     @ManyToOne
-    @JoinColumn(name = "idProduct")
+    @JoinColumn(name = "id_model")
     private Model model;
 
     @ManyToOne
-    @JoinColumn(name = "idSize")
-    private Size size;
+    @JoinColumn(name = "id_color")
+    private Color color;
 
     @ManyToOne
-    @JoinColumn(name = "idColor")
-    private Color color;
+    @JoinColumn(name = "id_size")
+    private Size size;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductImage> images;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
@@ -52,14 +57,6 @@ public class Product {
     private String image;
 
     public Product() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public List<ProductImage> getImages() {
@@ -88,16 +85,45 @@ public class Product {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public List<Product> getVariants() {
+        List<Product> result = new ArrayList<Product>();
+        for (Product product : getModel().getProducts()) {
+            result.add(product);
+        }
+        return result;
     }
 
-    public Size getSize() {
-        return size;
+    public List<Product> getOtherVariants() {
+        List<Product> result = new ArrayList<Product>();
+        for (Product product : getModel().getProducts()) {
+            if (product.getId() == getId()) {
+                continue;
+            }
+            result.add(product);
+        }
+        return result;
     }
 
-    public void setSize(Size size) {
-        this.size = size;
+    public List<Color> getColors() {
+        List<Color> result = new ArrayList<Color>();
+        for (Product product : getModel().getProducts()) {
+            if (product.getId() == getId()) {
+                continue;
+            }
+            result.add(product.getColor());
+        }
+        return result;
+    }
+
+    public List<Size> getSizes() {
+        List<Size> result = new ArrayList<Size>();
+        for (Product product : getModel().getProducts()) {
+            if (product.getId() == getId()) {
+                continue;
+            }
+            result.add(product.getSize());
+        }
+        return result;
     }
 
     public String getName() {
@@ -108,12 +134,56 @@ public class Product {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
     public double getLocation() {
         return location;
     }
 
     public void setLocation(double location) {
         this.location = location;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     public Model getModel() {
@@ -126,23 +196,9 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product [id=" + id + ", name=" + name + "]";
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public LocalDateTime getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(LocalDateTime deletedAt) {
-        this.deletedAt = deletedAt;
+        return "Product [id=" + id + ", name=" + name + ", description=" + description + ", location=" + location
+                + ", model=" + model + ", color=" + color + ", size=" + size + ", images=" + images + ", deletedAt="
+                + deletedAt + ", image=" + image + "]";
     }
 
 }

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout/layout}">
+
+<head>
+    <title th:text="${'Product: ' + product.name}">Product Details</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content" class="flex gap-8 max-h-full overflow-hidden">
+
+        <div class="flex flex-col flex-1 max-h-full overflow-auto overflow-y-auto">
+
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-xl font-[figtree-m]" th:text="${product.name}">Product Name</h1>
+                    <p class="text-sm opacity-50" th:text="${product.model.name}">Model Name</p>
+                </div>
+                <div class="flex gap-2">
+                    <a th:href="@{/admin/models/{id}(id=${product.model.id})}"
+                        class="btn btn-ghost btn-sm text-neutral-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Model
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product Variants -->
+            <div class="mb-10">
+
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-bold">Variations</h2>
+                    <button for="variant-modal" class="btn btn-primary btn-sm"
+                        onclick="add_variation_modal.showModal()">Add Variant</button>
+                    <dialog id="add_variation_modal" class="modal">
+                        <div class="modal-box">
+                            <div th:replace="~{admin/products/createInner :: div}"></div>
+                        </div>
+                        <form method="dialog" class="modal-backdrop">
+                            <button>close</button>
+                        </form>
+                    </dialog>
+                </div>
+
+                <div class="space-y-6">
+                    <div th:each="variant : ${product.variants}"
+                        class="bg-base-100 rounded-box shadow-sm border border-neutral-100 p-6 pb-2">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="font-bold flex items-center gap-2">
+                                    <span th:text="${variant.color.name}">Color</span>
+                                    <span class="opacity-20">|</span>
+                                    <span th:text="${variant.size.name}">Size</span>
+                                </h3>
+                                <p class="text-base font-[figtree-b] text-neutral-800"
+                                    th:text="${variant.location + ' Ar'}">#ID</p>
+                            </div>
+                            <form th:action="@{/admin/products/{id}/images(id=${variant.id})}" method="post"
+                                enctype="multipart/form-data" class="flex items-center gap-2">
+                                <input type="file" name="imageFile"
+                                    class="file-input file-input-bordered file-input-xs w-48" required />
+                                <button type="submit" class="btn btn-ghost btn-xs">Add Image</button>
+                            </form>
+                        </div>
+
+                        <div class="flex flex-wrap gap-3">
+                            <a th:each="vimg : ${variant.images}" th:href="@{/admin/productsImages/{id}/default(id=${vimg.id})}"  class="relative">
+                                <img th:src="${vimg.url}"
+                                    class="h-20 w-20 object-cover rounded shadow-sm border border-neutral-100" />
+                                <div th:if="${vimg.isDefault}"
+                                    class="absolute -top-1 -right-1 badge badge-primary badge-xs">D</div>
+                            </a>
+                            <div th:if="${variant.images == null or variant.images.isEmpty()}"
+                                class="h-20 flex items-center px-4 border border-dashed border-neutral-200 rounded text-sm opacity-50 italic">
+                                No variant images.
+                            </div>
+                        </div>
+
+                        <form th:action="@{/admin/products/{id}/delete(id=${variant.id})}" method="post"
+                            onsubmit="return confirm('Etes vous sur de vouloir supprimer ?')"
+                            class="flex flex-row-reverse">
+                            <button type="submit"
+                                class="btn btn-sm border-neutral-100 text-neutral-700 text-error">delete</button>
+                        </form>
+                    </div>
+
+                    <div th:if="${product.variants == null or product.variants.isEmpty()}"
+                        class="p-8 border-2 border-dashed border-neutral-200 rounded-lg text-center opacity-50 italic">
+                        No variations found for this product.
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

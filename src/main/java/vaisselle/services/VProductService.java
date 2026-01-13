@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import vaisselle.models.views.VProduct;
@@ -16,8 +17,8 @@ public class VProductService {
         this.vProductRepository = vModelRepository;
     }
 
-    public List<VProduct> getAllVModelsDistinct() {
-        return vProductRepository.findAllDistinctByModelId(PageRequest.of(0, 50));
+    public Page<VProduct> getAllVModelsDistinct() {
+        return vProductRepository.findAllProducts(PageRequest.of(0, 50));
     }
 
     public List<VProduct> getFilteredVModels(

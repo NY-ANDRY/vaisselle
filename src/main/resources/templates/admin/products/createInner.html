@@ -7,7 +7,7 @@
 
 <body>
 
-    <div class="max-w-xl w-88">
+    <div class="max-w-xl w-full">
 
         <h1 class="text-2xl font-bold mb-6" th:text="${editProduct != null ? 'Edit Product' : 'Create Product'}">Create
             Product</h1>
@@ -16,6 +16,7 @@
             enctype="multipart/form-data" class="space-y-4">
 
             <input type="hidden" name="id" th:if="${editProduct != null}" th:value="${editProduct.id}">
+            <input type="hidden" name="redirectUrl" th:if="${redirectUrl != null}" th:value="${redirectUrl}">
 
             <div class="form-control">
                 <label class="label">
@@ -27,13 +28,30 @@
 
             <div class="form-control">
                 <label class="label">
+                    <span class="label-text">Product Description</span>
+                </label>
+                <textarea type="text" name="description" placeholder="Description"
+                    class="textarea input-bordered w-full"
+                    th:value="${editProduct != null ? editProduct.description : ''}" required> </textarea>
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Product Price</span>
+                </label>
+                <input type="text" name="location" placeholder="Name" class="input input-bordered w-full"
+                    th:value="${editProduct != null ? editProduct.location : ''}" required />
+            </div>
+
+            <div class="form-control">
+                <label class="label">
                     <span class="label-text">Model</span>
                 </label>
                 <div class="p-0 overflow-y-auto">
                     <select name="model" class="select select-bordered w-full" required>
                         <option disabled th:selected="${editProduct == null}" value="">Select a model</option>
                         <option th:each="m : ${models}" th:value="${m.id}" th:text="${m.name}"
-                            th:selected="${editProduct != null && editProduct.model != null && editProduct.model.id == m.id}">
+                            th:selected="${(editProduct != null && editProduct.model != null && editProduct.model.id == m.id) || (selectedModel != null && selectedModel.id == m.id)}">
                         </option>
                     </select>
                 </div>
@@ -46,8 +64,8 @@
                 <div class="p-0 overflow-y-auto">
                     <select name="size" class="select select-bordered w-full" required>
                         <option disabled th:selected="${editProduct == null}" value="">Select a size</option>
-                        <option th:each="s : ${sizes}" th:value="${s.id}" th:text="${s.name}"
-                            th:selected="${editProduct != null && editProduct.size != null && editProduct.size.id == s.id}">
+                        <option th:each="size : ${sizes}" th:value="${size.id}" th:text="${size.name}"
+                            th:selected="${(editProduct != null && editProduct.size != null && editProduct.size.id == size.id)}">
                         </option>
                     </select>
                 </div>
@@ -60,8 +78,8 @@
                 <div class="p-0 overflow-y-auto">
                     <select name="color" class="select select-bordered w-full" required>
                         <option disabled th:selected="${editProduct == null}" value="">Select a color</option>
-                        <option th:each="c : ${colors}" th:value="${c.id}" th:text="${c.name}"
-                            th:selected="${editProduct != null && editProduct.color != null && editProduct.color.id == c.id}">
+                        <option th:each="color : ${colors}" th:value="${color.id}" th:text="${color.name}"
+                            th:selected="${(editProduct != null && editProduct.model != null && editProduct.model.id == color.id)}">
                         </option>
                     </select>
                 </div>
@@ -69,9 +87,11 @@
 
             <div class="form-control">
                 <label class="label">
-                    <span class="label-text">Product Image</span>
+                    <span class="label-text">Image</span>
                 </label>
-                <input type="file" name="imageFile" class="file-input file-input-bordered file-input-sm w-full" />
+                <div class="p-0 overflow-y-auto">
+                    <input name="imageFile" type="file" class="file-input w-full" />
+                </div>
             </div>
 
             <div class="form-control flex flex-row-reverse mt-6 gap-2">
@@ -82,31 +102,7 @@
 
         </form>
 
-        <!-- Product Image List (only for editing) -->
-        <div th:if="${editProduct != null}" class="mt-12 pt-12 border-t border-neutral-100 space-y-4 px-4 pb-12">
-            <h2 class="text-lg font-bold">Product Images</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div th:each="img : ${editProduct.images}" class="relative group aspect-square">
-                    <img th:src="${img.url}"
-                        class="w-full h-full object-cover rounded-xl shadow-sm border border-neutral-200" />
-                    <form th:action="@{/admin/products/images/{id}/delete(id=${img.id})}" method="post"
-                        class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <button type="submit" class="btn btn-circle btn-error btn-xs shadow-md"
-                            onsubmit="return confirm('Supprimer cette image ?')">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-            </div>
-            <div th:if="${editProduct.images == null or editProduct.images.isEmpty()}"
-                class="text-sm opacity-50 italic">
-                No images for this product.
-            </div>
-        </div>
+    </div>
 
     </div>
 

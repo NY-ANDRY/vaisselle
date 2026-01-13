@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import vaisselle.services.CategoryService;
 import vaisselle.services.ColorService;
-import vaisselle.services.ModelService;
+import vaisselle.services.ProductService;
 import vaisselle.services.SizeService;
 import vaisselle.services.TypeService;
 import vaisselle.services.VProductService;
@@ -20,25 +20,25 @@ import vaisselle.services.VProductService;
 @RequestMapping("/client/products")
 public class ProductController {
 
-    private final VProductService vmodelService;
+    private final VProductService vproductService;
     private final TypeService typeService;
     private final CategoryService categoryService;
     private final SizeService sizeService;
     private final ColorService colorService;
-    private final ModelService modelService;
+    private final ProductService productService;
 
     public ProductController(VProductService vmodelService,
             TypeService typeService,
             CategoryService categoryService,
             SizeService sizeService,
             ColorService colorService,
-            ModelService modelService) {
-        this.vmodelService = vmodelService;
+            ProductService productService) {
+        this.vproductService = vmodelService;
         this.typeService = typeService;
         this.categoryService = categoryService;
         this.sizeService = sizeService;
         this.colorService = colorService;
-        this.modelService = modelService;
+        this.productService = productService;
     }
 
     @GetMapping("")
@@ -75,19 +75,19 @@ public class ProductController {
 
         if ((typeId != null || categoryId != null || minLocation != null || maxLocation != null || sizeIds != null
                 || colorIds != null) || (keyword != null && !keyword.trim().isEmpty())) {
-            model.addAttribute("models",
-                    vmodelService.getFilteredVModels(typeId, categoryId, minLocation, maxLocation, sizeIds, colorIds,
+            model.addAttribute("products",
+                    vproductService.getFilteredVModels(typeId, categoryId, minLocation, maxLocation, sizeIds, colorIds,
                             keyword));
         } else {
-            model.addAttribute("models", vmodelService.getAllVModelsDistinct());
+            model.addAttribute("products", vproductService.getAllVModelsDistinct());
         }
         return "client/products/index";
     }
 
     @GetMapping("/{id}")
     public String viewModel(@PathVariable("id") Long id, Model model) {
-        var m = modelService.getModel(id);
-        model.addAttribute("model", m);
+        var m = productService.getProduct(id);
+        model.addAttribute("product", m);
         return "client/products/details";
     }
 

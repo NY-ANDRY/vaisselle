@@ -14,7 +14,7 @@ public class FileService {
     public String savePhoto(MultipartFile photoFile) {
         String result = "";
 
-        if (!photoFile.isEmpty()) {
+        if (photoFile != null && !photoFile.isEmpty()) {
             try {
 
                 String uploadDir = System.getProperty("user.dir") + UPLOADFOLDER;

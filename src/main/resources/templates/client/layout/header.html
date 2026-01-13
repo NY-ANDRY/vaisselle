@@ -44,7 +44,7 @@
             </a>
 
             <div th:if="${user == null}">
-                <label for="login_popup"
+                <label onclick="login_popup.showModal()"
                     class="flex items-center justify-center p-2 rounded-sm hover:bg-neutral-100 active:bg-neutral-200 transition-all cursor-pointer">
                     <svg class="stroke-neutral-800 w-6 h-6" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -54,19 +54,20 @@
                     </svg>
                 </label>
 
-                <input type="checkbox" id="login_popup" class="modal-toggle" />
-                <div class="modal" role="dialog">
+                <dialog class="modal" id="login_popup">
                     <div class="modal-box rounded-3xl w-full h-172">
-                       <div th:replace="~{client/auth/login :: div}"></div>
+                        <div th:replace="~{client/auth/login :: div}"></div>
                     </div>
-                    <label class="modal-backdrop" for="login_popup">Close</label>
-                </div>
+                    <form method="dialog" class="modal-backdrop">
+                        <button>close</button>
+                    </form>
+                </dialog>
             </div>
 
             <div th:if="${user != null}"
                 class="dropdown dropdown-bottom dropdown-end w-10 min-w-10 max-w-10 h-10 cursor-pointer">
                 <div tabindex="0" role="button" class="m-1">
-                    <img th:src="${user.img}" class=" rounded-full" alt="user">
+                    <img th:src="${user.img}" class="mask mask-squircle" alt="user">
                 </div>
                 <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
                     <li><a href="#">Profile</a></li>

@@ -3,7 +3,7 @@
     xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title th:text="${model.name}">Details</title>
+    <title th:text="${product.name}">Details</title>
 </head>
 
 <body>
@@ -13,59 +13,67 @@
         <div class="flex flex-col gap-8 max-w-4xl mx-auto">
             <!-- Model Header -->
             <div class="flex flex-col gap-2">
-                <h1 class="text-3xl font-bold text-neutral-800" th:text="${model.name}">Model Name</h1>
+                <h1 class="text-3xl font-bold text-neutral-800" th:text="${product.name}">Model Name</h1>
                 <div class="flex items-center gap-2">
-                    <span class="badge badge-primary badge-outline" th:text="${model.category.name}">Category</span>
+                    <span class="badge badge-primary badge-outline"
+                        th:text="${product.model.category.name}">Category</span>
+                    <span class="badge badge-neutral" th:text="${product.model.type.name}">Type</span>
                 </div>
-                <p class="text-neutral-600 mt-2" th:text="${model.description}">Model Description</p>
-            </div>
-
-            <!-- Available Types -->
-            <div class="flex flex-col gap-2">
-                <h2 class="text-xl font-semibold text-neutral-700">Types</h2>
-                <div class="flex flex-wrap gap-2">
-                    <span class="badge badge-neutral" th:text="${model.type.name}">Type</span>
-                </div>
+                <p class="text-neutral-600 mt-2" th:text="${product.model.description}">Model Description</p>
             </div>
 
             <!-- Products List -->
             <div class="flex flex-col gap-4">
-                <h2 class="text-xl font-semibold text-neutral-700">Variations (Products)</h2>
+                <h2 class="text-xl font-semibold text-neutral-700"></h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div th:each="product : ${model.products}"
-                        class="card bg-base-100 shadow-sm border border-neutral-200">
-                        <figure class="px-4 pt-4">
+                <div class="flex flex-col gap-6">
+                    <div th:each="variant : ${product.variants}"
+                        class="flex h-48 items-center justify-between rounded-3xl bg-base-100 shadow-sm border border-neutral-200 p-4">
 
-                            <img th:if="${product.image != null && product.image != ''}"
-                                th:src="@{${product.image}}" class="rounded-xl h-48 w-full object-cover"
-                                alt="Product Image">
-                            <img th:unless="${product.image != null && product.image != ''}"
-                                th:src="@{/uploads/test/fourchette.jpg}" class="rounded-xl h-48 w-full object-cover"
+                        <div class="flex items-center justify-center">
+                            <img th:if="${variant.image != null && variant.image != ''}" th:src="@{${variant.image}}"
+                                class="rounded-3xl w-36 h-full" alt="variant Image">
+                            <img th:unless="${variant.image != null && variant.image != ''}"
+                                th:src="@{/uploads/test/fourchette.jpg}" class="rounded-3xl w-36 h-full"
                                 alt="Default Image">
+                        </div>
 
-                        </figure>
-                        <div class="card-body p-4">
-                            <h3 class="card-title text-base" th:text="${product.name}">Product Name</h3>
+                        <div
+                            class="flex-1 h-full pl-4 pr-2 w-full flex justify-between flex-col gap-1 text-sm text-neutral-600">
 
-                            <div class="flex flex-col gap-1 text-sm text-neutral-600 mt-2">
-                                <div th:if="${product.size != null}">
-                                    <span class="font-semibold">Size:</span> <span
-                                        th:text="${product.size.name}">Size</span>
-                                </div>
+                            <div class="flex justify-between">
+                                <div class="flex gap-8">
+                                    <div th:if="${variant.size != null}" class="flex items-center gap-2">
+                                        <span class="font-sm">Size: </span>
+                                        <span class="badge badge-ghost badge-md"
+                                            th:text="${variant.size.name}">Size</span>
+                                    </div>
 
-                                <!-- Colors (Many-to-Many via ProductColor) -->
-                                <div th:if="${product.color != null}">
-                                    <span class="font-semibold">Colors:</span>
-                                    <div class="flex flex-wrap gap-1 mt-1">
-                                        <span class="badge badge-ghost badge-sm"
-                                            th:text="${product.color.name}">Color</span>
+                                    <div th:if="${variant.color != null}" class="flex items-center gap-2">
+                                        <span class="font-sm">Colors:</span>
+                                        <span class="badge badge-ghost badge-md"
+                                            th:text="${variant.color.name}">Color</span>
                                     </div>
                                 </div>
 
-                                <div class="mt-2 text-primary font-bold" th:text="${product.location + ' Ar'}">Price
+                                <div class="flex py-2 items-center justify-between">
+                                    <div class="text-xl font-[figtree-b]" th:text="${variant.location + ' Ar'}">
+                                    </div>
                                 </div>
                             </div>
+
+                            <div class="flex py-2 items-center justify-between">
+                                <div class="flex"></div>
+                                <div class="flex flex-col w-1/2">
+                                    <label for="" class="pb-0 text-neutral-500">Quantity</label>
+                                    <input type="number" class="w-full border-neutral-200 input h-8 outline-none">
+                                </div>
+                            </div>
+
+                            <button
+                                class="cursor-pointer hover:text-neutral-50 hover:bg-neutral-800 w-full font-[figtree] 
+                                    text-sm text-neutral-900 border-1 border-neutral-200 rounded-full py-1.5 px-8 transition-all">Add
+                                to Command</button>
                         </div>
                     </div>
                 </div>

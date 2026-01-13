@@ -2,10 +2,12 @@ package vaisselle.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import vaisselle.models.views.VProduct;
 
@@ -19,17 +21,22 @@ public interface VProductRepository extends JpaRepository<VProduct, Long> {
     // return findAllDistinctByModelId(PageRequest.of(0, 50));
     // }
 
-    @Query(value = "SELECT vp FROM VProduct vp")
-    List<VProduct> findAllDistinctByModelId(Pageable pageable);
+    /* ================= PRODUITS (PAGINÉS) ================= */
 
-    default List<VProduct> findAllDistinctByModelId() {
-        return findAllDistinctByModelId(PageRequest.of(0, 50));
+    @Query("SELECT v FROM VProduct v")
+    Page<VProduct> findAllProducts(Pageable pageable);
+
+    default Page<VProduct> findAllProducts() {
+        return findAllProducts(PageRequest.of(0, 50));
     }
+
+    /* ================= FILTRE ================= */
 
     @Query("""
                 SELECT v FROM VProduct v
                 WHERE (:keyword IS NULL OR
                     LOWER(v.productName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
+                    LOWER(v.productDescription) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
                     LOWER(v.modelName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
                     LOWER(v.modelDescription) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
                     LOWER(v.categoryName) LIKE LOWER(CONCAT('%', :keyword, '%')) OR
@@ -45,11 +52,11 @@ public interface VProductRepository extends JpaRepository<VProduct, Long> {
                 AND (:colorIds IS NULL OR v.colorId IN :colorIds)
             """)
     List<VProduct> filter(
-            Long typeId,
-            Long categoryId,
-            Double minLocation,
-            Double maxLocation,
-            List<Long> sizeIds,
-            List<Long> colorIds,
-            String keyword);
+            @Param("typeId") Long typeId,
+            @Param("categoryId") Long categoryId,
+            @Param("minLocation") Double minLocation,
+            @Param("maxLocation") Double maxLocation,
+            @Param("sizeIds") List<Long> sizeIds,
+            @Param("colorIds") List<Long> colorIds,
+            @Param("keyword") String keyword);
 }

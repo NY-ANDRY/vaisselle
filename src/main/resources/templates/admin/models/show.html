@@ -2,7 +2,7 @@
 <html layout:decorate="~{admin/layout/layout}">
 
 <head>
-    <title>Products</title>
+    <title th:text="${'Model: ' + selectedModel.name}">Model Details</title>
 </head>
 
 <body>
@@ -12,8 +12,21 @@
         <div class="flex flex-col flex-1 max-h-full overflow-auto overflow-y-auto">
 
             <div class="flex justify-between items-center mb-6">
-                <h1 class="text-xl font-[figtree-m]">Products</h1>
-                <a href="/admin/products" class="btn btn-primary btn-sm">Create New</a>
+                <div>
+                    <h1 class="text-xl font-[figtree-m]" th:text="${selectedModel.name}">Model Name</h1>
+                    <p class="text-sm opacity-50"
+                        th:text="${selectedModel.category.name + ' - ' + selectedModel.type.name}">Category - Type</p>
+                </div>
+                <div class="flex gap-2">
+                    <a href="/admin/models" class="btn btn-ghost btn-sm text-neutral-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Models
+                    </a>
+                </div>
             </div>
 
             <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100">
@@ -22,15 +35,13 @@
                     <thead>
                         <tr class="font-[figtree-m] uppercase text-xs opacity-60">
                             <th>Product</th>
-                            <th>Location Price</th>
                             <th>Size & Color</th>
-                            <th>Color & Size</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- row 1 -->
-                        <tr th:each="product : ${products}" class="hover:bg-neutral-50 transition-colors">
+                        <!-- products -->
+                        <tr th:each="product : ${selectedModel.products}" class="hover:bg-neutral-50 transition-colors">
                             <td>
                                 <div class="flex items-center gap-3">
                                     <div class="avatar">
@@ -45,15 +56,12 @@
                                                 <span th:text="${product.name}">Product Name</span>
                                             </a>
                                         </div>
-                                        <div class="text-sm opacity-50 font-[figtree]" th:text="${product.model.name}">
+                                        <div class="text-sm opacity-50 font-[figtree]" th:text="${'#' + product.id}">#ID
                                         </div>
                                     </div>
                                 </div>
                             </td>
                             <td>
-                                <div class="flex" th:text="${product.location + ' Ar'}"></div>
-                            </td>
-                            <td class="font-[figtree]">
                                 <div class="flex flex-wrap gap-1">
                                     <div class="badge badge-ghost badge-sm font-[figtree]"
                                         th:each="variant : ${product.variants}">
@@ -70,31 +78,25 @@
                                         class="btn btn-sm btn border-neutral-100 text-neutral-700">
                                         View
                                     </a>
-                                    <a th:href="@{/admin/products/{id}/edit(id=${product.id})}"
-                                        class="btn btn-sm btn border-neutral-100 text-neutral-700">
+                                    <a th:href="@{/admin/models/{modelId}(modelId=${selectedModel.id}, editId=${product.id})}"
+                                        class="btn btn-ghost btn-sm">
                                         edit
                                     </a>
                                     <form th:action="@{/admin/products/{id}/delete(id=${product.id})}" method="post"
                                         onsubmit="return confirm('Etes vous sur de vouloir supprimer ?')">
-                                        <button type="submit" class="btn btn-sm border-neutral-100 text-neutral-700 text-error">delete</button>
+                                        <input type="hidden" name="redirectUrl"
+                                            th:value="${'/admin/models/' + selectedModel.id}">
+                                        <button type="submit" class="btn btn-ghost btn-sm text-error">delete</button>
                                     </form>
                                 </div>
                             </td>
                         </tr>
                     </tbody>
-                    <!-- foot -->
-                    <tfoot class="bg-neutral-50/50">
-                        <tr class="font-[figtree-m] uppercase text-xs opacity-60">
-                            <th>Product</th>
-                            <th>Model & Size</th>
-                            <th>
-                                <div class="flex justify-end items-center gap-2 w-full">
-                                    Actions
-                                </div>
-                            </th>
-                        </tr>
-                    </tfoot>
                 </table>
+                <div th:if="${selectedModel.products == null or selectedModel.products.isEmpty()}"
+                    class="p-8 text-center opacity-50 italic">
+                    No products found for this model.
+                </div>
             </div>
 
             <div class="flex"></div>

@@ -8,16 +8,18 @@
 <body>
 
     <div class="max-w-xl w-88">
-
-        <h1 class="text-2xl font-bold mb-6">Create Model</h1>
+        <h1 class="text-2xl font-bold mb-6" th:text="${editModel != null ? 'Edit Model' : 'Create Model'}">Create Model
+        </h1>
 
         <form action="/admin/models" method="post" class="space-y-4 max-w-l">
+            <input type="hidden" name="id" th:if="${editModel != null}" th:value="${editModel.id}">
 
             <div class="form-control">
                 <label class="label">
                     <span class="label-text">Model Name</span>
                 </label>
-                <input type="text" name="name" placeholder="Name" class="input input-bordered w-full" required />
+                <input type="text" name="name" placeholder="Name" class="input input-bordered w-full"
+                    th:value="${editModel != null ? editModel.name : ''}" required />
             </div>
 
             <div class="form-control">
@@ -25,48 +27,43 @@
                     <span class="label-text">Description</span>
                 </label>
                 <textarea name="description" placeholder="Description" class="textarea textarea-bordered w-full"
-                    required></textarea>
+                    th:text="${editModel != null ? editModel.description : ''}" required></textarea>
             </div>
 
             <div class="form-control ">
                 <label class="label">
                     <span class="label-text">Type</span>
                 </label>
-
                 <div class="p-0 overflow-y-auto">
-
                     <select name="type" class="select select-bordered w-full" required>
-                        <option disabled selected>Select a type</option>
-                        <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}">
+                        <option disabled th:selected="${editModel == null}">Select a type</option>
+                        <option th:each="type : ${types}" th:value="${type.id}" th:text="${type.name}"
+                            th:selected="${editModel != null && editModel.type != null && editModel.type.id == type.id}">
                         </option>
                     </select>
-
                 </div>
-
             </div>
 
             <div class="form-control">
                 <label class="label">
                     <span class="label-text">Category</span>
                 </label>
-
                 <div class="p-0 overflow-y-auto">
                     <select name="category" class="select select-bordered w-full" required>
-                        <option disabled selected>Select a category</option>
-                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
+                        <option disabled th:selected="${editModel == null}">Select a category</option>
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"
+                            th:selected="${editModel != null && editModel.category != null && editModel.category.id == category.id}">
                         </option>
                     </select>
                 </div>
-
             </div>
 
             <div class="form-control flex flex-row-reverse mt-6 gap-2">
-                <button type="submit" class="btn btn-primary">Create model</button>
+                <button type="submit" class="btn btn-primary"
+                    th:text="${editModel != null ? 'Update model' : 'Create model'}">Create model</button>
                 <a href="/admin/models" class="btn btn-ghost">Cancel</a>
             </div>
-
         </form>
-
     </div>
 
 </body>

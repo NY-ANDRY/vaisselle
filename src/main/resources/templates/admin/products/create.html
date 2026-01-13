@@ -34,31 +34,89 @@
                     </div>
                 </div>
 
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Size</span>
-                    </label>
-                    <div class="p-0 overflow-y-auto">
-                        <select name="size" class="select select-bordered w-full" required>
-                            <option disabled selected value="">Select a size</option>
-                            <option th:each="size : ${sizes}" th:value="${size.id}" th:text="${size.name}">
-                            </option>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Sizes</span>
+                        </label>
+                        <select id="sizeSelect" class="select select-bordered w-full">
+                            <option disabled selected value="">Add a size</option>
+                            <option th:each="size : ${sizes}" th:value="${size.id}" th:text="${size.name}"></option>
+                        </select>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Colors</span>
+                        </label>
+                        <select id="colorSelect" class="select select-bordered w-full">
+                            <option disabled selected value="">Add a color</option>
+                            <option th:each="color : ${colors}" th:value="${color.id}" th:text="${color.name}"></option>
                         </select>
                     </div>
                 </div>
 
-                <div class="form-control">
-                    <label class="label">
-                        <span class="label-text">Color</span>
-                    </label>
-                    <div class="p-0 overflow-y-auto">
-                        <select name="color" class="select select-bordered w-full" required>
-                            <option disabled selected value="">Select a color</option>
-                            <option th:each="color : ${colors}" th:value="${color.id}" th:text="${color.name}">
-                            </option>
-                        </select>
-                    </div>
+                <div class="form-control mt-4">
+                    <button type="button" id="addVariant" class="btn btn-outline btn-sm">Add Variant</button>
                 </div>
+
+                <div id="variantsContainer" class="space-y-2 mt-4">
+                    <!-- Added variants will appear here -->
+                </div>
+
+                <input type="hidden" name="colorIds" id="colorIdsInput" />
+                <input type="hidden" name="sizeIds" id="sizeIdsInput" />
+
+                <script>
+                    const addedVariants = [];
+                    const variantsContainer = document.getElementById('variantsContainer');
+                    const colorIdsInput = document.getElementById('colorIdsInput');
+                    const sizeIdsInput = document.getElementById('sizeIdsInput');
+
+                    document.getElementById('addVariant').addEventListener('click', () => {
+                        const sizeSelect = document.getElementById('sizeSelect');
+                        const colorSelect = document.getElementById('colorSelect');
+
+                        if (sizeSelect.value && colorSelect.value) {
+                            const variant = {
+                                sizeId: sizeSelect.value,
+                                sizeName: sizeSelect.options[sizeSelect.selectedIndex].text,
+                                colorId: colorSelect.value,
+                                colorName: colorSelect.options[colorSelect.selectedIndex].text
+                            };
+
+                            addedVariants.push(variant);
+                            updateVariantsUI();
+                        }
+                    });
+
+                    function updateVariantsUI() {
+                        variantsContainer.innerHTML = '';
+                        const colorIds = [];
+                        const sizeIds = [];
+
+                        addedVariants.forEach((v, index) => {
+                            const div = document.createElement('div');
+                            div.className = 'flex items-center justify-between bg-neutral-50 p-2 rounded';
+                            div.innerHTML = `
+                                <span>${v.sizeName} - ${v.colorName}</span>
+                                <button type="button" class="btn btn-ghost btn-xs text-error" onclick="removeVariant(${index})">Remove</button>
+                            `;
+                            variantsContainer.appendChild(div);
+
+                            colorIds.push(v.colorId);
+                            sizeIds.push(v.sizeId);
+                        });
+
+                        colorIdsInput.value = colorIds.join(',');
+                        sizeIdsInput.value = sizeIds.join(',');
+                    }
+
+                    window.removeVariant = (index) => {
+                        addedVariants.splice(index, 1);
+                        updateVariantsUI();
+                    };
+                </script>
 
                 <div class="form-control">
                     <label class="label">

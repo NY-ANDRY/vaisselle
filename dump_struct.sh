@@ -3,14 +3,13 @@
 output_file="sql/base.txt"
 tables=(
 "t_categories" 
-"t_types" 
-"t_models" 
-"t_products" 
-"t_models_types" 
-"t_users"
 "t_colors"
-"t_products_colors"
+"t_models"
+"t_products"
+"t_product_images"
 "t_sizes"
+"t_types" 
+"t_users"
 )
 
 echo "tables structure" > "$output_file"
