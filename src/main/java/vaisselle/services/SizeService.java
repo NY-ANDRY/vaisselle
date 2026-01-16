@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vaisselle.models.tables.Size;
 import vaisselle.repositories.SizeRepository;
@@ -9,10 +10,10 @@ import java.util.List;
 @Service
 public class SizeService {
 
-    private final SizeRepository sizeRepository;
+    @Autowired
+    private SizeRepository sizeRepository;
 
-    public SizeService(SizeRepository sizeRepository) {
-        this.sizeRepository = sizeRepository;
+    public SizeService() {
     }
 
     public List<Size> getAllSizes() {

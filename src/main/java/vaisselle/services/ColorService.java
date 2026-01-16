@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vaisselle.models.tables.Color;
 import vaisselle.repositories.ColorRepository;
@@ -9,10 +10,10 @@ import java.util.List;
 @Service
 public class ColorService {
 
-    private final ColorRepository colorRepository;
+    @Autowired
+    private ColorRepository colorRepository;
 
-    public ColorService(ColorRepository colorRepository) {
-        this.colorRepository = colorRepository;
+    public ColorService() {
     }
 
     public List<Color> getAllColors() {

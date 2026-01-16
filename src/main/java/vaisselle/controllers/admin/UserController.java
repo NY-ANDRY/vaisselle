@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,16 +49,19 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public String saveUser(@ModelAttribute User user,
+    public String saveUser(@RequestParam String name,
             @RequestParam("photoFile") MultipartFile photoFile) throws IOException {
 
-        String img = fileService.savePhoto(photoFile);
+        User user = new User();
+        user.setName(name);
 
+        String img = fileService.savePhoto(photoFile);
         if (!img.isEmpty()) {
             user.setImg(img);
         }
 
         userService.saveUser(user);
+
         return "redirect:/admin/users";
     }
 
@@ -71,13 +73,11 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute User user,
+    public String updateUser(@RequestParam("id") Long id, @RequestParam("name") String name,
             @RequestParam("photoFile") MultipartFile photoFile) throws IOException {
 
-        if (user.getId() == null) {
-            System.out.println(user.toString());
-            return "redirect:/admin/users";
-        }
+        User user = userService.getUser(id);
+        user.setName(name);
 
         String img = fileService.savePhoto(photoFile);
         if (!img.isEmpty()) {
@@ -86,5 +86,11 @@ public class UserController {
 
         userService.updateUser(user);
         return "redirect:/admin/users/" + user.getId();
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
+        return "redirect:/admin/users";
     }
 }

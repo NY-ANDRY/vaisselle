@@ -1,30 +1,21 @@
-<!DOCTYPE html>
-<html layout:decorate="~{admin/layout/layout}">
-
 <head>
-    <title>Créer un utilisateur</title>
+    <title th:text="${user.id != null ? 'Modifier un utilisateur' : 'Créer un utilisateur'}">User form</title>
 </head>
 
 <body>
 
     <div layout:fragment="content" class="p-6">
 
-        <h2 class="text-2xl font-bold mb-4">User form</h2>
+        <h2 class="text-2xl font-bold mb-4"
+            th:text="${user.id != null ? 'Modifier un utilisateur' : 'Créer un utilisateur'}">User form</h2>
 
         <div class="card card-sm bg-base-100 shadow-sm w-72">
             <div class="card-body">
 
                 <form th:action="@{${actionUrl}}" th:object="${user}" method="post" class="space-y-4"
                     enctype="multipart/form-data">
-                    <input type="text" hidden th:field="*{id}" placeholder="id" class="input input-bordered w-full" />
 
-                    <div class="form-control">
-                        <label class="label">
-                            <span class="label-text">id</span>
-                        </label>
-                        <input type="text" disabled th:field="*{id}" placeholder="id"
-                            class="input input-bordered w-full" />
-                    </div>
+                    <input type="hidden" th:field="*{id}" />
 
                     <div class="form-control">
                         <label class="label">
@@ -38,10 +29,12 @@
                         <label class="label">
                             <span class="label-text">Photo</span>
                         </label>
-                        <input type="file" name="photoFile" class="file-input file-input-ghost" />
+                        <input type="file" name="photoFile" class="file-input file-input-bordered w-full" />
+                        <p th:if="${user.id != null}" class="text-xs mt-1 text-base-content/60">Laissez vide pour
+                            conserver l'image actuelle.</p>
                     </div>
 
-                    <div class="form-control mt-2">
+                    <div class="form-control mt-4">
                         <button type="submit" class="btn btn-primary w-full">Enregistrer</button>
                     </div>
 
@@ -52,12 +45,8 @@
 
         <div class="mt-4">
             <a th:href="@{/admin/users}">
-                <button class="btn btn-sm btn-outline">Retour à la liste</button>
+                <button class="btn btn-sm btn-outline">Annuler</button>
             </a>
         </div>
 
     </div>
-
-</body>
-
-</html>

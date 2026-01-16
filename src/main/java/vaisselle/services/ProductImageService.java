@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vaisselle.models.tables.Product;
@@ -12,12 +13,12 @@ import java.util.List;
 @Service
 public class ProductImageService {
 
-    private final ProductImageRepository productImageRepository;
-    private final ProductRepository productRepository;
+    @Autowired
+    private ProductImageRepository productImageRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-    public ProductImageService(ProductImageRepository productImageRepository, ProductRepository productRepository) {
-        this.productImageRepository = productImageRepository;
-        this.productRepository = productRepository;
+    public ProductImageService() {
     }
 
     public ProductImage setDefaultProductImage(Long id) {

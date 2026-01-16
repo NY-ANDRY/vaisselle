@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vaisselle.models.tables.Type;
 import vaisselle.repositories.TypeRepository;
@@ -9,10 +10,10 @@ import java.util.List;
 @Service
 public class TypeService {
 
-    private final TypeRepository typeRepository;
+    @Autowired
+    private TypeRepository typeRepository;
 
-    public TypeService(TypeRepository typeRepository) {
-        this.typeRepository = typeRepository;
+    public TypeService() {
     }
 
     public List<Type> getAllTypes() {

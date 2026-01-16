@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vaisselle.models.tables.Product;
@@ -10,10 +11,10 @@ import java.util.List;
 @Service
 public class ProductService {
 
-    private final ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-    public ProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService() {
     }
 
     public int setAllProductDiscount (Double nb, Double discount) {

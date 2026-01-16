@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,10 @@ import java.util.List;
 @Service
 public class VProductService {
 
-    private final VProductRepository vProductRepository;
+    @Autowired
+    private VProductRepository vProductRepository;
 
-    public VProductService(VProductRepository vModelRepository) {
-        this.vProductRepository = vModelRepository;
+    public VProductService() {
     }
 
     public Page<VProduct> getAllVModelsDistinct() {

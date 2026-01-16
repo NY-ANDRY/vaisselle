@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vaisselle.models.tables.User;
@@ -9,10 +10,11 @@ import java.util.List;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    public UserService() {
     }
 
     public User login(User user) {
@@ -40,5 +42,9 @@ public class UserService {
             user.setImg(original.getImg());
         }
         return userRepository.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

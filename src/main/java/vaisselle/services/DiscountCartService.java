@@ -1,5 +1,6 @@
 package vaisselle.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vaisselle.models.tables.DiscountCart;
 import vaisselle.repositories.DiscountCartRepository;
@@ -9,10 +10,10 @@ import java.util.List;
 @Service
 public class DiscountCartService {
 
-    private final DiscountCartRepository discountCartRepository;
+    @Autowired
+    private DiscountCartRepository discountCartRepository;
 
-    public DiscountCartService(DiscountCartRepository discountCartRepository) {
-        this.discountCartRepository = discountCartRepository;
+    public DiscountCartService() {
     }
 
     public int setDiscounts(Double nb, Double discount) {

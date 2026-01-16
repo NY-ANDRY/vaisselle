@@ -25,10 +25,21 @@
             </div>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-4 flex gap-2">
             <a th:href="@{/admin/users}">
-                <button class="btn btn-sm btn-primary">
+                <button class="btn btn-sm btn-outline">
                     Retour à la liste
+                </button>
+            </a>
+            <a th:href="@{/admin/users/{id}/update(id=${user.id})}">
+                <button class="btn btn-sm btn-primary">
+                    Modifier
+                </button>
+            </a>
+            <a th:href="@{/admin/users/{id}/delete(id=${user.id})}"
+                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">
+                <button class="btn btn-sm btn-error">
+                    Supprimer
                 </button>
             </a>
         </div>

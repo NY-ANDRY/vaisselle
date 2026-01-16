@@ -74,10 +74,13 @@ TRUNCATE TABLE
     t_product_images,
     t_sizes,
     t_types,
+    t_discount_cart,
     t_users
 RESTART IDENTITY CASCADE;
 
 -- Categories & Types
+INSERT INTO t_discount_cart (discount, nb) VALUES (20, 3);
+
 INSERT INTO t_categories (name) VALUES ('Standard'), ('Premium'), ('Luxe');
 
 INSERT INTO t_types (name) VALUES ('Assiette'), ('Verre à jus'), ('Verre whisky'), ('Tasse'), ('Carafe');
@@ -97,23 +100,23 @@ INSERT INTO t_sizes (name) VALUES ('Small'), ('Medium'), ('Large');
 INSERT INTO t_colors (name) VALUES ('White'), ('Gold'), ('Transparent'), ('Silver');
 
 -- Products : un produit par modèle+taille+couleur (id_color / id_model / id_size)
-INSERT INTO t_products (name, location, id_color, id_model, id_size) VALUES
-('Assiette blanche classique - Small', 10.0, 1, 1, 1),
-('Assiette blanche classique - Medium', 12.5, 1, 1, 2),
-('Assiette blanche classique - Large', 15.0, 1, 1, 3),
+INSERT INTO t_products (name, location, id_color, id_model, id_size, discount, nb_discount) VALUES
+('Assiette blanche classique - Small', 10.0, 1, 1, 1, 20, 3),
+('Assiette blanche classique - Medium', 12.5, 1, 1, 2, 20, 3),
+('Assiette blanche classique - Large', 15.0, 1, 1, 3, 20, 3),
 
-('Assiette dorée - Medium', 45.0, 2, 2, 2),
-('Assiette dorée - Large', 55.0, 2, 2, 3),
+('Assiette dorée - Medium', 45.0, 2, 2, 2, 20, 3),
+('Assiette dorée - Large', 55.0, 2, 2, 3, 20, 3),
 
-('Verre à jus transparent - Small', 16.0, 3, 3, 1),
-('Verre à jus transparent - Medium', 18.0, 3, 3, 2),
+('Verre à jus transparent - Small', 16.0, 3, 3, 1, 20, 3),
+('Verre à jus transparent - Medium', 18.0, 3, 3, 2, 20, 3),
 
-('Verre whisky cristal - Medium', 60.0, 3, 4, 2),
+('Verre whisky cristal - Medium', 60.0, 3, 4, 2, 20, 3),
 
-('Tasse en porcelaine - Small', 20.0, 1, 5, 1),
-('Tasse en porcelaine - Medium', 22.0, 1, 5, 2),
+('Tasse en porcelaine - Small', 20.0, 1, 5, 1, 20, 3),
+('Tasse en porcelaine - Medium', 22.0, 1, 5, 2, 20, 3),
 
-('Carafe en verre - Medium', 16.5, 3, 6, 2);
+('Carafe en verre - Medium', 16.5, 3, 6, 2, 20, 3);
 
 -- Images (depuis /uploads/test)
 INSERT INTO t_product_images (id_product, url, is_default) VALUES
