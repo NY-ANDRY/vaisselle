@@ -54,3 +54,16 @@ CREATE TABLE t_users (
     name VARCHAR(255) NOT NULL,
     img VARCHAR(255)
 );
+
+CREATE TABLE t_carts (
+    id SERIAL PRIMARY KEY,
+    id_user INT REFERENCES t_users(id),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE t_cart_details (
+    id SERIAL PRIMARY KEY,
+    id_cart INT REFERENCES t_carts(id),
+    id_product INT REFERENCES t_products(id),
+    qtt INT NOT NULL
+);

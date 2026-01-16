@@ -62,18 +62,25 @@
                                 </div>
                             </div>
 
-                            <div class="flex py-2 items-center justify-between">
-                                <div class="flex"></div>
-                                <div class="flex flex-col w-1/2">
-                                    <label for="" class="pb-0 text-neutral-500">Quantity</label>
-                                    <input type="number" class="w-full border-neutral-200 input h-8 outline-none">
-                                </div>
-                            </div>
+                            <form action="/client/cart" method="post">
 
-                            <button
-                                class="cursor-pointer hover:text-neutral-50 hover:bg-neutral-800 w-full font-[figtree] 
-                                    text-sm text-neutral-900 border-1 border-neutral-200 rounded-full py-1.5 px-8 transition-all">Add
-                                to Command</button>
+
+                                <input name="idProduct" type="hidden" th:value="${variant.id}">
+                                <div class="flex py-2 items-center justify-between">
+                                    <div class="flex"></div>
+                                    <div class="flex flex-col w-1/2">
+                                        <label for="" class="pb-0 text-neutral-500">Quantity</label>
+                                        <input name="qtt" type="number"
+                                            class="w-full border-neutral-200 input h-8 outline-none">
+                                    </div>
+                                </div>
+
+                                <button
+                                    class="cursor-pointer hover:text-neutral-50 hover:bg-neutral-800 w-full font-[figtree] 
+                            text-sm text-neutral-900 border-1 border-neutral-200 rounded-full py-1.5 px-8 transition-all">Add
+                                    to Command</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>

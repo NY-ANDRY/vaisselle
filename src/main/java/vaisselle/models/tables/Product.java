@@ -35,6 +35,12 @@ public class Product {
     @Column(name = "location", nullable = false)
     private double location;
 
+    @Column(name = "discount", nullable = true)
+    private Double discount;
+
+    @Column(name = "nbDiscount", nullable = true)
+    private Double nbDiscount;
+
     @ManyToOne
     @JoinColumn(name = "id_model")
     private Model model;
@@ -57,6 +63,22 @@ public class Product {
     private String image;
 
     public Product() {
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public Double getNbDiscount() {
+        return nbDiscount;
+    }
+
+    public void setNbDiscount(Double nbDiscount) {
+        this.nbDiscount = nbDiscount;
     }
 
     public List<ProductImage> getImages() {

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html layout:decorate="~{client/layout/layout}">
+
+<head>
+    <title>Command</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content" class="flex gap-8 max-h-full overflow-hidden">
+
+        <div class="flex flex-col flex-1 max-h-full overflow-auto overflow-y-auto">
+
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-xl font-[figtree-m]">Command</h1>
+            </div>
+            <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100">
+                <table class="table w-full">
+                    <!-- head -->
+                    <thead>
+                        <tr class="font-[figtree-m] uppercase text-xs opacity-60">
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>qtt</th>
+                            <th>remise</th>
+                            <th>total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- row 1 -->
+                        <tr th:each="cartDetail : ${cart.details}" class="hover:bg-neutral-50 transition-colors">
+                            <td>
+                                <div class="flex" th:text="${cartDetail.product.name + ' Ar'}"></div>
+                            </td>
+                            <td>
+                                <div class="flex" th:text="${cartDetail.product.location + ' Ar'}"></div>
+                            </td>
+                            <td class="font-[figtree]">
+                                <div class="flex" th:text="${cartDetail.qtt}"></div>
+                            </td>
+                            <td class="font-[figtree]">
+                                
+                                <div class="flex" th:if="${cartDetail.qtt >= cartDetail.product.nbDiscount}" th:text="${cartDetail.product.discount + '%'}"></div>
+                                <div class="flex" th:if="${!(cartDetail.qtt >= cartDetail.product.nbDiscount)}" th:text="${'0%'}"></div>
+                            </td>
+                            <td class="font-[figtree]">
+                                <div class="flex" th:text="${cartDetail.total + ' Ar'}"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <!-- foot -->
+                    <tfoot class="bg-neutral-50/50">
+                        <tr class="font-[figtree-m] uppercase text-xs opacity-60">
+                            <th class="text-xl">total</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th class="text-neutral-900 text-xl flex">
+                                <div th:text="${cart.total + ' Ar'}"></div>
+                            </th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="flex"></div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
