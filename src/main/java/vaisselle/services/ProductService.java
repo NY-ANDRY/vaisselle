@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import vaisselle.models.tables.Product;
 import vaisselle.repositories.ProductRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,11 +14,13 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private MovementService movementService;
 
     public ProductService() {
     }
 
-    public int setAllProductDiscount (Double nb, Double discount) {
+    public int setAllProductDiscount(Double nb, Double discount) {
         return productRepository.setAllDiscounts(nb, discount);
     }
 
@@ -29,8 +32,21 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public Product getProductWithVariantsStatic(Long idProduct) {
+        Product result = productRepository.findById(idProduct).orElse(null);
+        List<Product> variants = new ArrayList<Product>();
+        for (Product variant : result.getVariants()) {
+            variant.setStock(movementService.getStock(variant));
+            variants.add(variant);
+        }
+        result.setVariantsStatic(variants);
+        return result;
+    }
+
     public Product getProduct(Long idProduct) {
-        return productRepository.findById(idProduct).orElse(null);
+        Product result = productRepository.findById(idProduct).orElse(null);
+        result.setStock(movementService.getStock(result));
+        return result;
     }
 
     public Product updateProduct(Product product) {

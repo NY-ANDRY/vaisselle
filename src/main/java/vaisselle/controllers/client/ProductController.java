@@ -82,7 +82,7 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public String viewModel(@PathVariable("id") Long id, Model model) {
-        var m = productService.getProduct(id);
+        var m = productService.getProductWithVariantsStatic(id);
         model.addAttribute("product", m);
         return "client/products/details";
     }

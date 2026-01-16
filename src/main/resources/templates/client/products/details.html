@@ -27,7 +27,7 @@
                 <h2 class="text-xl font-semibold text-neutral-700"></h2>
 
                 <div class="flex flex-col gap-6">
-                    <div th:each="variant : ${product.variants}"
+                    <div th:each="variant : ${product.variantsStatic}"
                         class="flex h-48 items-center justify-between rounded-3xl bg-base-100 shadow-sm border border-neutral-200 p-4">
 
                         <div class="flex items-center justify-center">
@@ -67,7 +67,10 @@
 
                                 <input name="idProduct" type="hidden" th:value="${variant.id}">
                                 <div class="flex py-2 items-center justify-between">
-                                    <div class="flex"></div>
+                                    <div class="flex">
+                                        <div class="flex">Stock: </div>
+                                        <div class="flex" th:text="${variant.stock}"></div>
+                                    </div>
                                     <div class="flex flex-col w-1/2">
                                         <label for="" class="pb-0 text-neutral-500">Quantity</label>
                                         <input name="qtt" type="number"

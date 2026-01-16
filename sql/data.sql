@@ -75,6 +75,8 @@ TRUNCATE TABLE
     t_sizes,
     t_types,
     t_discount_cart,
+    t_movements,
+    t_movement_types,
     t_users
 RESTART IDENTITY CASCADE;
 
@@ -142,3 +144,29 @@ INSERT INTO t_users (name, img) VALUES
 ('abc', '/uploads/test/user.jpg'),
 ('Admin', 'admin.png'),
 ('Client Test', 'client.png');
+
+INSERT INTO t_movement_types (name, type) VALUES
+('ajout', 1),
+('location', -1),
+('detruit', -1);
+
+INSERT INTO t_movement_types (name, type) VALUES
+('location', -1),
+('ajout', 1),
+('detruit', -1);
+
+INSERT INTO t_movements (id_product, id_type, qtt) VALUES
+(1, 1, 10),
+(2, 1, 10),
+(2, 1, 10),
+(3, 1, 10),
+(3, 1, 10),
+(3, 1, 10);
+
+INSERT INTO t_movements (id_product, id_type, qtt) VALUES
+(1, 2, 2),
+(2, 2, 2),
+(2, 2, 2),
+(3, 2, 2),
+(3, 2, 2),
+(3, 2, 2);

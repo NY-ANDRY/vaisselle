@@ -59,8 +59,17 @@ public class Product {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @OneToMany(mappedBy = "product")
+    private List<Movement> movements;
+
     @Transient
     private String image;
+
+    @Transient
+    private double stock;
+
+    @Transient
+    private List<Product> variantsStatic;
 
     public Product() {
     }
@@ -148,6 +157,22 @@ public class Product {
         return result;
     }
 
+    public List<Movement> getMovements() {
+        return movements;
+    }
+
+    public void setMovements(List<Movement> movements) {
+        this.movements = movements;
+    }
+
+    public double getStock() {
+        return stock;
+    }
+
+    public void setStock(double stock) {
+        this.stock = stock;
+    }
+
     public String getName() {
         return name;
     }
@@ -221,6 +246,14 @@ public class Product {
         return "Product [id=" + id + ", name=" + name + ", description=" + description + ", location=" + location
                 + ", model=" + model + ", color=" + color + ", size=" + size + ", images=" + images + ", deletedAt="
                 + deletedAt + ", image=" + image + "]";
+    }
+
+    public List<Product> getVariantsStatic() {
+        return variantsStatic;
+    }
+
+    public void setVariantsStatic(List<Product> variantsStatic) {
+        this.variantsStatic = variantsStatic;
     }
 
 }

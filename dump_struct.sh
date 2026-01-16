@@ -2,9 +2,14 @@
 
 output_file="sql/base.txt"
 tables=(
+"t_carts" 
+"t_cart_details" 
 "t_categories" 
 "t_colors"
+"t_discount_cart"
 "t_models"
+"t_movements"
+"t_movement_types"
 "t_products"
 "t_product_images"
 "t_sizes"

@@ -63,6 +63,9 @@ public class VProduct {
     @Column(name = "color_name")
     private String colorName;
 
+    @Column(name = "stock")
+    private Double stock;
+
     /* ================= GETTERS ================= */
 
     public Long getProductId() {
@@ -131,5 +134,9 @@ public class VProduct {
 
     public String getProductImageUrl() {
         return productImageUrl;
+    }
+
+    public Double getStock() {
+        return stock;
     }
 }
