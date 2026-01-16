@@ -1,5 +1,6 @@
 package vaisselle.controllers.admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,22 +20,20 @@ import vaisselle.services.SizeService;
 @RequestMapping("/admin/models")
 public class ModelController {
 
-    private final ModelService modelService;
-    private final TypeService matiereService;
-    private final CategoryService categoryService;
-    private final ProductService productService;
-    private final SizeService sizeService;
-    private final ColorService colorService;
+    @Autowired
+    private ModelService modelService;
+    @Autowired
+    private TypeService matiereService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private SizeService sizeService;
+    @Autowired
+    private ColorService colorService;
 
-    public ModelController(ModelService productService, TypeService matiereService,
-            CategoryService categoryService, SizeService sizeService, ColorService colorService,
-            ProductService productServiceBackend) {
-        this.modelService = productService;
-        this.matiereService = matiereService;
-        this.categoryService = categoryService;
-        this.sizeService = sizeService;
-        this.colorService = colorService;
-        this.productService = productServiceBackend;
+    public ModelController() {
     }
 
     @GetMapping("")

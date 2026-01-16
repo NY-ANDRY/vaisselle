@@ -1,5 +1,6 @@
 package vaisselle.controllers.admin;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,26 +27,24 @@ import java.io.IOException;
 @RequestMapping("/admin/products")
 public class ProductController {
 
-    private final ProductService productService;
-    private final ProductImageService productImageService;
-    private final ModelService modelService;
-    private final SizeService sizeService;
-    private final ColorService colorService;
-    private final FileService fileService;
-    private final CategoryService categoryService;
-    private final TypeService typeService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private ProductImageService productImageService;
+    @Autowired
+    private ModelService modelService;
+    @Autowired
+    private SizeService sizeService;
+    @Autowired
+    private ColorService colorService;
+    @Autowired
+    private FileService fileService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private TypeService typeService;
 
-    public ProductController(ProductService productService, ProductImageService productImageService,
-            ModelService modelService, SizeService sizeService, ColorService colorService, FileService fileService,
-            CategoryService categoryService, TypeService typeService) {
-        this.productService = productService;
-        this.productImageService = productImageService;
-        this.modelService = modelService;
-        this.sizeService = sizeService;
-        this.colorService = colorService;
-        this.fileService = fileService;
-        this.categoryService = categoryService;
-        this.typeService = typeService;
+    public ProductController() {
     }
 
     @GetMapping("")
@@ -91,6 +90,8 @@ public class ProductController {
             @RequestParam Long model,
             @RequestParam Long size,
             @RequestParam Long color,
+            @RequestParam Double nbDiscount,
+            @RequestParam Double discount,
             @RequestParam(required = false) MultipartFile imageFile,
             @RequestParam(required = false) String redirectUrl) throws IOException {
 
@@ -101,6 +102,8 @@ public class ProductController {
         p.setModel(modelService.getModel(model));
         p.setSize(sizeService.getSize(size));
         p.setColor(colorService.getColor(color));
+        p.setNbDiscount(nbDiscount);
+        p.setDiscount(discount);
 
         Product savedProduct = productService.saveProduct(p);
 

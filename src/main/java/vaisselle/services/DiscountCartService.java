@@ -15,6 +15,10 @@ public class DiscountCartService {
         this.discountCartRepository = discountCartRepository;
     }
 
+    public int setDiscounts(Double nb, Double discount) {
+        return discountCartRepository.setAllDiscounts(nb, discount);
+    }
+
     public List<DiscountCart> getAllDiscountCart() {
         return discountCartRepository.findAll();
     }

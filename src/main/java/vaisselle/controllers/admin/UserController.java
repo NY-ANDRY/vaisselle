@@ -2,6 +2,7 @@ package vaisselle.controllers.admin;
 
 import java.io.IOException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +21,12 @@ import vaisselle.services.UserService;
 @RequestMapping("/admin/users")
 public class UserController {
 
-    private final UserService userService;
-    private final FileService fileService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private FileService fileService;
 
-    public UserController(UserService userService, FileService fileService) {
-        this.userService = userService;
-        this.fileService = fileService;
+    public UserController() {
     }
 
     @GetMapping("")

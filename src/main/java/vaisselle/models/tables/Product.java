@@ -38,7 +38,7 @@ public class Product {
     @Column(name = "discount", nullable = true)
     private Double discount;
 
-    @Column(name = "nbDiscount", nullable = true)
+    @Column(name = "nb_discount", nullable = true)
     private Double nbDiscount;
 
     @ManyToOne

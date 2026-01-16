@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import vaisselle.models.tables.Cart;
 import vaisselle.models.tables.CartDetail;
 import vaisselle.models.tables.DiscountCart;
+import vaisselle.models.tables.User;
 import vaisselle.repositories.CartDetailRepository;
 import vaisselle.repositories.CartRepository;
 
@@ -22,6 +23,8 @@ public class CartService {
     private ProductService productService;
     @Autowired
     private DiscountCartService discountCartService;
+    @Autowired
+    private CartDetailService cartDetailService;
 
     public Cart makeCart(Long id) {
         Cart cart = cartRepository.findById(id).orElseThrow();
@@ -40,10 +43,8 @@ public class CartService {
             if (cd.getProduct().getNbDiscount() <= cd.getQtt()) {
                 curPrice = curPrice - ((curPrice / 100) * cd.getProduct().getDiscount());
                 cd.setTotal(curPrice);
-                System.out.println("ok");
             } else {
                 cd.setTotal(cd.getProduct().getLocation());
-                System.out.println("no");
             }
             total += curPrice;
 
@@ -57,6 +58,21 @@ public class CartService {
         cart.setTotal(total);
 
         return cart;
+    }
+
+    public Cart createCart(User u, Long idProduct, Integer qtt) {
+
+        Cart c = new Cart();
+        c.setUser(u);
+        c = save(c);
+
+        CartDetail cd = new CartDetail();
+        cd.setCart(c);
+        cd.setQtt(qtt);
+        cd.setProduct(productService.getProduct(idProduct));
+        cartDetailService.save(cd);
+
+        return c;
     }
 
     public Cart addDetails(Cart cart, Long idProduct, Integer qtt) {

@@ -2,6 +2,7 @@ package vaisselle.controllers.client;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,25 +21,20 @@ import vaisselle.services.VProductService;
 @RequestMapping("/client/products")
 public class ProductController {
 
-    private final VProductService vproductService;
-    private final TypeService typeService;
-    private final CategoryService categoryService;
-    private final SizeService sizeService;
-    private final ColorService colorService;
-    private final ProductService productService;
+    @Autowired
+    private VProductService vproductService;
+    @Autowired
+    private TypeService typeService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private SizeService sizeService;
+    @Autowired
+    private ColorService colorService;
+    @Autowired
+    private ProductService productService;
 
-    public ProductController(VProductService vmodelService,
-            TypeService typeService,
-            CategoryService categoryService,
-            SizeService sizeService,
-            ColorService colorService,
-            ProductService productService) {
-        this.vproductService = vmodelService;
-        this.typeService = typeService;
-        this.categoryService = categoryService;
-        this.sizeService = sizeService;
-        this.colorService = colorService;
-        this.productService = productService;
+    public ProductController() {
     }
 
     @GetMapping("")

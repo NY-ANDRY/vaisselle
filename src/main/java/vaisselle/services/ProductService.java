@@ -16,6 +16,10 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public int setAllProductDiscount (Double nb, Double discount) {
+        return productRepository.setAllDiscounts(nb, discount);
+    }
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }

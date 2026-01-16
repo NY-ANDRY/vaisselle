@@ -32,7 +32,7 @@
                 </label>
                 <textarea type="text" name="description" placeholder="Description"
                     class="textarea input-bordered w-full"
-                    th:value="${editProduct != null ? editProduct.description : ''}" required> </textarea>
+                    th:text="${editProduct != null ? editProduct.description : ''}" required> </textarea>
             </div>
 
             <div class="form-control">
@@ -83,6 +83,22 @@
                         </option>
                     </select>
                 </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Product nb min discount</span>
+                </label>
+                <input type="number" name="nbDiscount" placeholder="Name" class="input input-bordered w-full"
+                    th:value="${editProduct != null ? editProduct.nbDiscount : ''}" required />
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">Product discount</span>
+                </label>
+                <input type="number" name="discount" placeholder="Name" class="input input-bordered w-full"
+                    th:value="${editProduct != null ? editProduct.discount : ''}" required />
             </div>
 
             <div class="form-control">

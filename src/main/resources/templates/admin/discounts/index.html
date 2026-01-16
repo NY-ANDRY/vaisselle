@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout/layout}">
+
+<head>
+    <title>Comman</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content" class="flex gap-8 max-h-full overflow-hidden">
+
+        <div class="flex flex-col flex-1 max-h-full overflow-auto overflow-y-auto">
+
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-xl font-[figtree-m]">Reductions</h1>
+            </div>
+
+            <div class="flex">
+                <form action="/admin/discounts" method="post" class="flex flex-col gap-4 py-2">
+
+                    <div class="flex flex-col">
+
+                        <div class="flex text-xl font-[figtree-m]">Commande</div>
+                        <div class="flex gap-2">
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Nombre min</span>
+                                </label>
+                                <input type="number" name="cartNbDiscount" placeholder="Name"
+                                    class="input input-sm w-full" th:value="${paramm.nb}" required />
+                            </div>
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">reduction (%)</span>
+                                </label>
+                                <input type="number" name="cartDiscount" placeholder="Name"
+                                    class="input input-sm w-full" th:value="${paramm.discount}" required />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col">
+
+                        <div class="flex text-xl font-[figtree-m]">Products</div>
+                        <div class="flex gap-2">
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Nombre min</span>
+                                </label>
+                                <input type="number" name="productsNbDiscount" placeholder="Name"
+                                    class="input input-sm w-full" th:value="${parammm.nbDiscount}" required />
+                            </div>
+
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">reduction (%)</span>
+                                </label>
+                                <input type="number" name="productsDiscount" placeholder="Name"
+                                    class="input input-sm w-full" th:value="${parammm.discount}" required />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-sm">valider</button>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

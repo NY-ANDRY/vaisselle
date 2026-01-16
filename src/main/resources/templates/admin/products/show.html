@@ -68,7 +68,8 @@
                         </div>
 
                         <div class="flex flex-wrap gap-3">
-                            <a th:each="vimg : ${variant.images}" th:href="@{/admin/productsImages/{id}/default(id=${vimg.id})}"  class="relative">
+                            <a th:each="vimg : ${variant.images}"
+                                th:href="@{/admin/productsImages/{id}/default(id=${vimg.id})}" class="relative">
                                 <img th:src="${vimg.url}"
                                     class="h-20 w-20 object-cover rounded shadow-sm border border-neutral-100" />
                                 <div th:if="${vimg.isDefault}"
@@ -80,12 +81,21 @@
                             </div>
                         </div>
 
-                        <form th:action="@{/admin/products/{id}/delete(id=${variant.id})}" method="post"
-                            onsubmit="return confirm('Etes vous sur de vouloir supprimer ?')"
-                            class="flex flex-row-reverse">
-                            <button type="submit"
-                                class="btn btn-sm border-neutral-100 text-neutral-700 text-error">delete</button>
-                        </form>
+                        <div class="flex items-center justify-end gap-2">
+
+                            <a th:href="@{/admin/products?editId={id}(id=${variant.id})}">
+                                <button type="submit"
+                                    class="btn btn-sm border-neutral-100 text-neutral-700 text-warning">modif</button>
+                            </a>
+
+                            <form th:action="@{/admin/products/{id}/delete(id=${variant.id})}" method="post"
+                                onsubmit="return confirm('Etes vous sur de vouloir supprimer ?')"
+                                class="flex flex-row-reverse">
+                                <button type="submit"
+                                    class="btn btn-sm border-neutral-100 text-neutral-700 text-error">delete</button>
+                            </form>
+
+                        </div>
                     </div>
 
                     <div th:if="${product.variants == null or product.variants.isEmpty()}"

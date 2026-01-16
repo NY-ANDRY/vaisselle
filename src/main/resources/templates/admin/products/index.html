@@ -35,7 +35,7 @@
                             <option th:each="size : ${sizes}" th:value="${size.id}" th:text="${size.name}"
                                 th:selected="${size.id == sizeId}">Size</option>
                         </select>
-                        <button type="submit" class="btn btn-sm btn-ghost border-neutral-200">Filter</button>
+                        <button type="submit" class="btn btn-sm btn-accent border-neutral-200">Filter</button>
                     </form>
                     <a href="/admin/products" class="btn btn-primary btn-sm">Create New</a>
                 </div>

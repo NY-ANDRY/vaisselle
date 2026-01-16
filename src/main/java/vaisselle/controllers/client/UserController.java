@@ -1,5 +1,6 @@
 package vaisselle.controllers.client;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,10 @@ import vaisselle.services.UserService;
 @RequestMapping("/client/auth")
 public class UserController {
 
-    private final UserService userService;
+    @Autowired
+    private UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController() {
     }
 
     @GetMapping("/login")
