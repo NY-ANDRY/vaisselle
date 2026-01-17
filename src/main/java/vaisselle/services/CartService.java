@@ -39,12 +39,12 @@ public class CartService {
         for (CartDetail cd : cart.getDetails()) {
             totalQtt += cd.getQtt();
 
-            double curPrice = cd.getProduct().getLocation() * cd.getQtt();
+            double curPrice = cd.getProduct().getPrice() * cd.getQtt();
             if (cd.getProduct().getNbDiscount() <= cd.getQtt()) {
                 curPrice = curPrice - ((curPrice / 100) * cd.getProduct().getDiscount());
                 cd.setTotal(curPrice);
             } else {
-                cd.setTotal(cd.getProduct().getLocation());
+                cd.setTotal(cd.getProduct().getPrice());
             }
             total += curPrice;
 

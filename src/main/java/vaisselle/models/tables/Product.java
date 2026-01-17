@@ -74,6 +74,28 @@ public class Product {
     public Product() {
     }
 
+    public double getPrice() {
+        double result = getLocation();
+        double augmentation = getAugmentation();
+
+        if (augmentation <= 0) {
+            return result;
+        }
+
+        result = result + ((result / 100) * augmentation);
+        return result;
+    }
+
+    public double getAugmentation() {
+        double augmentation = 0;
+        for (ColorUp colorUp : getColor().getUp()) {
+            if (colorUp.getValue() > augmentation) {
+                augmentation = colorUp.getValue();
+            }
+        }
+        return augmentation;
+    }
+
     public Double getDiscount() {
         return discount;
     }

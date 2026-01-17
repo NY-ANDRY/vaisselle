@@ -20,6 +20,7 @@
                     <thead>
                         <tr class="font-[figtree-m] uppercase text-xs opacity-60">
                             <th>Product</th>
+                            <th>color</th>
                             <th>Price</th>
                             <th>qtt</th>
                             <th>remise</th>
@@ -30,10 +31,13 @@
                         <!-- row 1 -->
                         <tr th:each="cartDetail : ${cart.details}" class="hover:bg-neutral-50 transition-colors">
                             <td>
-                                <div class="flex" th:text="${cartDetail.product.name + ' Ar'}"></div>
+                                <div class="flex" th:text="${cartDetail.product.name + ' Ar '}"></div>
+                            </td>
+                                                        <td>
+                                <div class="flex" th:text="${cartDetail.product.color.name }"></div>
                             </td>
                             <td>
-                                <div class="flex" th:text="${cartDetail.product.location + ' Ar'}"></div>
+                                <div class="flex" th:text="${cartDetail.product.price + ' Ar'}"></div>
                             </td>
                             <td class="font-[figtree]">
                                 <div class="flex" th:text="${cartDetail.qtt}"></div>

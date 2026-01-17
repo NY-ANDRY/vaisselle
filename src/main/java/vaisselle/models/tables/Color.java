@@ -23,6 +23,10 @@ public class Color {
     @OneToMany(mappedBy = "color")
     private List<Product> products;
 
+    @OneToMany(mappedBy = "color")
+    private List<ColorUp> up;
+
+
     public Color() {
     }
 
@@ -57,6 +61,14 @@ public class Color {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public List<ColorUp> getUp() {
+        return up;
+    }
+
+    public void setUp(List<ColorUp> up) {
+        this.up = up;
     }
 
 }

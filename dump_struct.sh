@@ -6,6 +6,7 @@ tables=(
 "t_cart_details" 
 "t_categories" 
 "t_colors"
+"t_colors_up"
 "t_discount_cart"
 "t_models"
 "t_movements"
