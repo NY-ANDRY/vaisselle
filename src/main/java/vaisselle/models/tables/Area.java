@@ -20,8 +20,11 @@ public class Area {
     @Column(name = "name", nullable = false)
     private String name;
 
+    // @OneToMany(mappedBy = "area")
+    // private List<Cart> carts;
+
     @OneToMany(mappedBy = "area")
-    private List<Cart> carts;
+    private List<CartDetail> cartsDetails;
 
     @OneToMany(mappedBy = "area")
     private List<AreaCost> costs;
@@ -52,19 +55,28 @@ public class Area {
         this.name = name;
     }
 
-    public List<Cart> getCarts() {
-        return carts;
-    }
+    // public List<Cart> getCarts() {
+    // return carts;
+    // }
 
-    public void setCarts(List<Cart> carts) {
-        this.carts = carts;
-    }
+    // public void setCarts(List<Cart> carts) {
+    // this.carts = carts;
+    // }
+
     public List<AreaCost> getCosts() {
         return costs;
     }
 
     public void setCosts(List<AreaCost> costs) {
         this.costs = costs;
+    }
+
+    public List<CartDetail> getCartsDetails() {
+        return cartsDetails;
+    }
+
+    public void setCartsDetails(List<CartDetail> cartsDetails) {
+        this.cartsDetails = cartsDetails;
     }
 
 }

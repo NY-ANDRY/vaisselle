@@ -33,6 +33,12 @@ public class CartDetail {
     private Integer qtt;
 
     @Transient
+    private double discount;
+
+    @Transient
+    private double discountValue;
+
+    @Transient
     private double total;
 
     public CartDetail() {
@@ -85,4 +91,21 @@ public class CartDetail {
     public void setArea(Area area) {
         this.area = area;
     }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public double getDiscountValue() {
+        return discountValue;
+    }
+
+    public void setDiscountValue(double discountValue) {
+        this.discountValue = discountValue;
+    }
+
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html layout:decorate="~{client/layout/layout}">
+
+<head>
+    <title>Comman</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content" class="flex gap-8 max-h-full overflow-hidden">
+
+        <div class="flex flex-col flex-1 max-h-full overflow-auto overflow-y-auto">
+
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-xl font-[figtree-m]">Parametre</h1>
+            </div>
+
+            <div class="">
+                <label for=""> all discount: 
+                <div class="flex" th:text="${paramm.discount + '%'}"></div>
+                <div class="flex" th:text="${paramm.nb }"></div>
+            </label>
+            <label for="">product discount:
+                <div class="flex" th:text="${parammm.discount + '%'}"></div>
+
+                <div class="flex" th:text="${parammm.nbDiscount }"></div>
+            </label>
+            </div>
+            
+
+            <div class="flex"></div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

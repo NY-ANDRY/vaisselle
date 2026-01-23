@@ -12,11 +12,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "t_carts")
-public class Cart {
+@Table(name = "t_order")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,22 +31,22 @@ public class Cart {
     // @JoinColumn(name = "id_area")
     // private Area area;
 
-    @OneToMany(mappedBy = "cart")
-    private List<CartDetail> details;
+    @Column(name = "product_cost")
+    private double productCost;
 
-    @Transient
-    private double totalProducts;
+    @Column(name = "delivery_cost")
+    private double deliveryCost;
 
-    @Transient
-    private double totalDeliveries;
-
-    @Transient
+    @Column(name = "discount")
     private double discount;
 
-    @Transient
+    @Column(name = "total_cost")
     private double totalCost;
 
-    public Cart() {
+    @OneToMany(mappedBy = "order")
+    private List<OrderDetail> details;
+
+    public Order() {
     }
 
     public Long getId() {
@@ -74,16 +73,28 @@ public class Cart {
         this.date = date;
     }
 
-    public List<CartDetail> getDetails() {
-        return details;
+    public double getProductCost() {
+        return productCost;
     }
 
-    public double getTotalProducts() {
-        return totalProducts;
+    public void setProductCost(double productCost) {
+        this.productCost = productCost;
     }
 
-    public void setTotalProducts(double total) {
-        this.totalProducts = total;
+    public double getDeliveryCost() {
+        return deliveryCost;
+    }
+
+    public void setDeliveryCost(double deliveryCost) {
+        this.deliveryCost = deliveryCost;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 
     public double getDiscount() {
@@ -94,7 +105,11 @@ public class Cart {
         this.discount = discount;
     }
 
-    public void setDetails(List<CartDetail> details) {
+    public List<OrderDetail> getDetails() {
+        return details;
+    }
+
+    public void setDetails(List<OrderDetail> details) {
         this.details = details;
     }
 
@@ -106,19 +121,4 @@ public class Cart {
     // this.area = area;
     // }
 
-    public double getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
-    }
-
-    public double getTotalDeliveries() {
-        return totalDeliveries;
-    }
-
-    public void setTotalDeliveries(double totalDelivery) {
-        this.totalDeliveries = totalDelivery;
-    }
 }

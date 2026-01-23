@@ -28,40 +28,48 @@ public class CartService {
 
     public Cart makeCart(Long id) {
         Cart cart = cartRepository.findById(id).orElseThrow();
-        double total = 0;
 
         DiscountCart dc = discountCartService.getAllDiscountCart().get(0);
         double discount = dc.getDiscount();
         double nbDiscount = dc.getNb();
 
         double totalQtt = 0;
+        double totalProduct = 0;
+        double totalDeliveries = 0;
+        double totalCost = 0;
 
         for (CartDetail cd : cart.getDetails()) {
             totalQtt += cd.getQtt();
 
-            double curPrice = cd.getProduct().getPrice() * cd.getQtt();
+            double productPrice = cd.getProduct().getPrice() * cd.getQtt();
 
-            double livraison = 0;
+            if (cd.getQtt() >= cd.getProduct().getNbDiscount()) {
+                cd.setDiscount(cd.getProduct().getDiscount());
+                cd.setDiscountValue(productPrice * cd.getProduct().getDiscount() / 100);
+                productPrice = productPrice - (productPrice * cd.getProduct().getDiscount() / 100);
+            }
+
+            double delivery = 0;
+
             if (cd.getArea() != null) {
-                livraison = cd.getArea().getCost();
+                delivery = cd.getArea().getCost();
             }
 
-            if (cd.getProduct().getNbDiscount() <= cd.getQtt()) {
-                curPrice += curPrice - (curPrice * cd.getProduct().getDiscount() / 100);
-                cd.setTotal(curPrice + livraison);
-            } else {
-                cd.setTotal(curPrice + livraison);
-            }
-            total += curPrice + livraison;
+            cd.setTotal(productPrice + delivery);
 
+            totalProduct += productPrice;
+            totalDeliveries += delivery;
+            totalCost += productPrice + delivery;
         }
 
         if (totalQtt >= nbDiscount) {
-            total = total - ((total / 100) * discount);
+            totalCost = totalCost - ((totalCost / 100) * discount);
             cart.setDiscount(discount);
         }
 
-        cart.setTotal(total);
+        cart.setTotalProducts(totalProduct);
+        cart.setTotalDeliveries(totalDeliveries);
+        cart.setTotalCost(totalCost);
 
         // if (cart.getArea() != null) {
         // cart.setTotalCost(total + cart.getArea().getCost());

@@ -68,8 +68,6 @@ public class CartController {
     public String addArea(@RequestParam("idArea") Long idArea, @RequestParam("idCartDetail") Long idCartDetail,
             HttpSession session) {
 
-        // Long idCart = (Long) session.getAttribute("idCart");
-
         Area a = areaService.getarea(idArea);
         CartDetail cd = cartDetailService.findById(idCartDetail);
         cd.setArea(a);
@@ -77,20 +75,6 @@ public class CartController {
 
         return "redirect:/client/cart";
     }
-
-    // @GetMapping("/delArea")
-    // public String delArea(HttpSession session) {
-
-    // Long idCart = (Long) session.getAttribute("idCart");
-
-    // if (idCart != null) {
-    // Cart c = cartService.findById(idCart);
-    // c.setArea(null);
-    // cartService.save(c);
-    // }
-
-    // return "redirect:/client/cart";
-    // }
 
     @PostMapping("")
     public String viewModel(@RequestParam("idProduct") Long idProduct,
