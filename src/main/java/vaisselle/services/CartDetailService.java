@@ -7,7 +7,6 @@ import vaisselle.models.tables.CartDetail;
 import vaisselle.repositories.CartDetailRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartDetailService {
@@ -19,8 +18,8 @@ public class CartDetailService {
         return cartDetailRepository.findAll();
     }
 
-    public Optional<CartDetail> findById(Long id) {
-        return cartDetailRepository.findById(id);
+    public CartDetail findById(Long id) {
+        return cartDetailRepository.findById(id).orElse(null);
     }
 
     public CartDetail save(CartDetail cartDetail) {

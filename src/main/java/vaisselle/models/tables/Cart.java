@@ -28,11 +28,18 @@ public class Cart {
     @Column(name = "date")
     private LocalDateTime date = LocalDateTime.now();
 
+    @ManyToOne
+    @JoinColumn(name = "id_area")
+    private Area area;
+
     @OneToMany(mappedBy = "cart")
     private List<CartDetail> details;
 
     @Transient
     private double total;
+
+    @Transient
+    private double totalCost;
 
     @Transient
     private double discount;
@@ -86,5 +93,21 @@ public class Cart {
 
     public void setDetails(List<CartDetail> details) {
         this.details = details;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+
+    public double getTotalCost() {
+        return totalCost;
+    }
+
+    public void setTotalCost(double totalCost) {
+        this.totalCost = totalCost;
     }
 }

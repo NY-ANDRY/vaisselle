@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import vaisselle.models.tables.Area;
 import vaisselle.models.tables.Cart;
+import vaisselle.models.tables.CartDetail;
 import vaisselle.models.tables.DiscountCart;
 import vaisselle.models.tables.User;
+import vaisselle.services.AreaService;
+import vaisselle.services.CartDetailService;
 import vaisselle.services.CartService;
 import vaisselle.services.DiscountCartService;
 import vaisselle.services.ProductService;
@@ -28,7 +32,11 @@ public class CartController {
     @Autowired
     private CartService cartService;
     @Autowired
+    private CartDetailService cartDetailService;
+    @Autowired
     private DiscountCartService discountCartService;
+    @Autowired
+    private AreaService areaService;
 
     public CartController() {
     }
@@ -43,6 +51,7 @@ public class CartController {
         } else {
             model.addAttribute("cart", new Cart());
         }
+        model.addAttribute("areas", areaService.getAllAreas());
 
         return "client/cart/index";
     }
@@ -54,6 +63,34 @@ public class CartController {
         model.addAttribute("parammm", productService.getAllProducts().get(0));
         return "client/cart/param";
     }
+
+    @PostMapping("/area")
+    public String addArea(@RequestParam("idArea") Long idArea, @RequestParam("idCartDetail") Long idCartDetail,
+            HttpSession session) {
+
+        // Long idCart = (Long) session.getAttribute("idCart");
+
+        Area a = areaService.getarea(idArea);
+        CartDetail cd = cartDetailService.findById(idCartDetail);
+        cd.setArea(a);
+        cartDetailService.save(cd);
+
+        return "redirect:/client/cart";
+    }
+
+    // @GetMapping("/delArea")
+    // public String delArea(HttpSession session) {
+
+    // Long idCart = (Long) session.getAttribute("idCart");
+
+    // if (idCart != null) {
+    // Cart c = cartService.findById(idCart);
+    // c.setArea(null);
+    // cartService.save(c);
+    // }
+
+    // return "redirect:/client/cart";
+    // }
 
     @PostMapping("")
     public String viewModel(@RequestParam("idProduct") Long idProduct,

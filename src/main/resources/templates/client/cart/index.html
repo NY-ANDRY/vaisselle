@@ -14,7 +14,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-xl font-[figtree-m]">Command</h1>
             </div>
-            <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100">
+            <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100 pb-4">
                 <table class="table w-full">
                     <!-- head -->
                     <thead>
@@ -24,6 +24,7 @@
                             <th>Price</th>
                             <th>qtt</th>
                             <th>remise</th>
+                            <th>livraison</th>
                             <th>total</th>
                         </tr>
                     </thead>
@@ -33,7 +34,7 @@
                             <td>
                                 <div class="flex" th:text="${cartDetail.product.name + ' Ar '}"></div>
                             </td>
-                                                        <td>
+                            <td>
                                 <div class="flex" th:text="${cartDetail.product.color.name }"></div>
                             </td>
                             <td>
@@ -43,28 +44,124 @@
                                 <div class="flex" th:text="${cartDetail.qtt}"></div>
                             </td>
                             <td class="font-[figtree]">
-                                
-                                <div class="flex" th:if="${cartDetail.qtt >= cartDetail.product.nbDiscount}" th:text="${cartDetail.product.discount + '%'}"></div>
-                                <div class="flex" th:if="${!(cartDetail.qtt >= cartDetail.product.nbDiscount)}" th:text="${'0%'}"></div>
+
+                                <div class="flex" th:if="${cartDetail.qtt >= cartDetail.product.nbDiscount}"
+                                    th:text="${cartDetail.product.discount + '%'}"></div>
+                                <div class="flex" th:if="${!(cartDetail.qtt >= cartDetail.product.nbDiscount)}"
+                                    th:text="${'0%'}"></div>
+                            </td>
+                            <td class="font-[figtree]">
+                                <div class="flex flex-col items-center">
+                                    <form action="/client/cart/area" method="post" class="flex space-y-4 w-128 px-4">
+
+                                        <input type="hidden" name="idCartDetail" th:value="${cartDetail.id}">
+
+                                        <div class="form-control p-0">
+
+                                                <select name="idArea" class="select select-bordered w-full select-sm" required>
+                                                    <option disabled selected>Select a lieux</option>
+                                                    <option th:each="area : ${areas}" th:value="${area.id}"
+                                                        th:text="${area.name + ' - ' + area.cost}"
+                                                        th:selected="${cartDetail.area != null && cartDetail.area.id == area.id}">
+                                                    </option>
+
+                                                    </option>
+                                                </select>
+
+                                        </div>
+
+                                        <div class=" flex flex-row-reverse gap-2 pl-2">
+                                            <button type="submit" class="btn btn-primary btn-sm">Changer lieux</button>
+                                        </div>
+
+                                    </form>
+
+                                    <div th:if="${cartDetail.area != null}"
+                                        th:txt="${cartDetail.area.name + ' - ' + cartDetail.area.cost}"> </div>
+
+                                </div>
                             </td>
                             <td class="font-[figtree]">
                                 <div class="flex" th:text="${cartDetail.total + ' Ar'}"></div>
                             </td>
                         </tr>
                     </tbody>
-                    <!-- foot -->
-                    <tfoot class="bg-neutral-50/50">
-                        <tr class="font-[figtree-m] uppercase text-xs opacity-60">
-                            <th class="text-xl">total</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th class="text-neutral-900 text-xl flex">
-                                <div th:text="${cart.total + ' Ar'}"></div>
-                            </th>
-                        </tr>
-                    </tfoot>
                 </table>
+
+                <div class="flex flex-row-reverse">
+
+                    <div class="flex flex-col">
+
+
+                        <div class="flex flex-col px-4 w-128 py-4">
+                            <div class="flex w-full">
+                                <div class="flex gap-2 justify-between w-full">
+                                    <div class="flex text-lg text-neutral-400">
+                                        total:
+                                    </div>
+                                    <div class="text-xl" th:text="${cart.total + ' Ar'}"></div>
+                                </div>
+                            </div>
+                            <!-- <div class="flex w-full">
+                                <div class="flex gap-2 justify-between w-full">
+                                    <div class="flex text-lg text-neutral-400">
+                                        livraison total:
+                                    </div>
+                                    <div class="text-xl" th:if="${cart.area != null}"
+                                        th:text="${cart.area.cost + ' Ar'}">
+                                    </div>
+                                    <div class="text-xl" th:if="${!(cart.area != null)}">aucun livraison</div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="flex w-full">
+                                <div class="flex gap-2 justify-between w-full">
+                                    <div class="flex text-lg text-neutral-400">
+                                        total + livraison:
+                                    </div>
+                                    <div class="text-xl" th:text="${cart.totalCost + ' Ar'}"></div>
+                                </div>
+                            </div> -->
+                        </div>
+
+                        <!-- 
+                        <div class="flex flex-col">
+
+                            <form action="/client/cart/area" method="post" class="space-y-4 w-128 px-4">
+
+                                <div class="form-control">
+                                    <label class="label">
+                                        <span class="label-text">Lieux livraison</span>
+                                    </label>
+
+                                    <div class="p-0 overflow-y-auto">
+                                        <select name="idArea" class="select select-bordered w-full" required>
+                                            <option disabled selected>Select a lieux</option>
+                                            <option th:each="area : ${areas}" th:value="${area.id}"
+                                                th:text="${area.name + ' - ' + area.cost}"
+                                                th:selected="${cart.area != null && cart.area.id == area.id}"></option>
+                                            >
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-control flex flex-row-reverse mt-6 gap-2">
+                                    <button type="submit" class="btn btn-primary">Changer lieux</button>
+                                </div>
+
+                            </form>
+
+                            <div class="flex flex-row-reverse w-128 px-4 pt-4">
+                                <a href="/client/cart/delArea">
+                                    <button class="btn">ne pas livrer</button>
+                                </a>
+                            </div>
+
+                        </div> -->
+                    </div>
+
+                </div>
             </div>
 
             <div class="flex"></div>

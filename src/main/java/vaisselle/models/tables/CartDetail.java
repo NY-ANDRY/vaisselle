@@ -25,6 +25,10 @@ public class CartDetail {
     @JoinColumn(name = "id_product")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "id_area")
+    private Area area;
+
     @Column(name = "qtt")
     private Integer qtt;
 
@@ -72,5 +76,13 @@ public class CartDetail {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
     }
 }

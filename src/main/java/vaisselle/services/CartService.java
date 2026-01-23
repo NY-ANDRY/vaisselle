@@ -40,13 +40,19 @@ public class CartService {
             totalQtt += cd.getQtt();
 
             double curPrice = cd.getProduct().getPrice() * cd.getQtt();
-            if (cd.getProduct().getNbDiscount() <= cd.getQtt()) {
-                curPrice = curPrice - ((curPrice / 100) * cd.getProduct().getDiscount());
-                cd.setTotal(curPrice);
-            } else {
-                cd.setTotal(cd.getProduct().getPrice());
+
+            double livraison = 0;
+            if (cd.getArea() != null) {
+                livraison = cd.getArea().getCost();
             }
-            total += curPrice;
+
+            if (cd.getProduct().getNbDiscount() <= cd.getQtt()) {
+                curPrice += curPrice - (curPrice * cd.getProduct().getDiscount() / 100);
+                cd.setTotal(curPrice + livraison);
+            } else {
+                cd.setTotal(curPrice + livraison);
+            }
+            total += curPrice + livraison;
 
         }
 
@@ -56,6 +62,12 @@ public class CartService {
         }
 
         cart.setTotal(total);
+
+        // if (cart.getArea() != null) {
+        // cart.setTotalCost(total + cart.getArea().getCost());
+        // } else {
+        // cart.setTotalCost(total);
+        // }
 
         return cart;
     }
