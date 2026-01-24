@@ -3,6 +3,7 @@ package vaisselle.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vaisselle.models.tables.BalanceMovement;
 import vaisselle.models.tables.Cart;
 import vaisselle.models.tables.CartDetail;
 import vaisselle.models.tables.Order;
@@ -21,6 +22,14 @@ public class OrderService {
     private OrderDetailService orderDetailService;
     @Autowired
     private CartService cartService;
+    @Autowired
+    private OrderDetailBackService orderDetailBackService;
+
+    @Autowired
+    private BalanceMovementService balanceMovementService;
+
+    @Autowired
+    private BalanceMovementTypeService balanceMovementTypeService;
 
     public Order makeOrder(long idCart) {
         Order result = new Order();
@@ -30,8 +39,10 @@ public class OrderService {
 
         for (CartDetail cartDetail : cart.getDetails()) {
             OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setArea(cartDetail.getArea());
-            orderDetail.setAreaPrice(cartDetail.getArea().getCost());
+            if (cartDetail.getArea() != null) {
+                orderDetail.setArea(cartDetail.getArea());
+                orderDetail.setAreaPrice(cartDetail.getArea().getCost());
+            }
             orderDetail.setProduct(cartDetail.getProduct());
             orderDetail.setProductDiscount(cartDetail.getDiscount());
             orderDetail.setProductDiscountValue(cartDetail.getDiscountValue());
@@ -66,7 +77,15 @@ public class OrderService {
     }
 
     public Order save(Order order) {
+        boolean isNew = order.getId() == null;
         Order result = orderRepository.save(order);
+
+        if (isNew) {
+            BalanceMovement movement = new BalanceMovement();
+            movement.setAmount(result.getTotalCost());
+            movement.setType(balanceMovementTypeService.findById(1L)); // 1 = Achat
+            balanceMovementService.save(movement);
+        }
 
         if (order.getDetails() == null) {
             return result;
@@ -80,5 +99,23 @@ public class OrderService {
 
     public void deleteById(Long id) {
         orderRepository.deleteById(id);
+    }
+
+    public double getTotalTurnover() {
+        Double total = orderRepository.sumTotalCost();
+        return total != null ? total : 0.0;
+    }
+
+    public double getTotalTurnoverOk() {
+        Double total = balanceMovementService.getTotalIn();
+        return total != null ? total : 0.0;
+    }
+
+    public double getTotalOut() {
+        return orderDetailBackService.getTotalReturns();
+    }
+
+    public double getTotalOutOk() {
+        return balanceMovementService.getTotalOut();
     }
 }

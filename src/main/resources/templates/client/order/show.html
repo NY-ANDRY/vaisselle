@@ -7,90 +7,102 @@
 
 <body>
 
-<div layout:fragment="content" class="flex gap-8 max-h-full overflow-hidden">
+    <div layout:fragment="content" class="flex gap-8 max-h-full overflow-hidden">
 
-    <div class="flex flex-col flex-1 max-h-full overflow-auto gap-6">
+        <div class="flex flex-col flex-1 max-h-full overflow-auto gap-6">
 
-        <div class="flex justify-between items-center">
-            <h1 class="text-xl font-[figtree-m]">Order summary</h1>
-        </div>
+            <div class="flex justify-between items-center">
+                <h1 class="text-xl font-[figtree-m]">Order summary</h1>
+            </div>
 
-        <!-- TABLE -->
-        <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100 pb-4">
-            <table class="table w-full">
-                <thead>
-                <tr class="font-[figtree-m] uppercase text-xs opacity-60">
-                    <th>Produit</th>
-                    <th>Couleur</th>
-                    <th>Prix</th>
-                    <th>Qtt</th>
-                    <th>Remise</th>
-                    <th>Livraison</th>
-                    <th>Total</th>
-                </tr>
-                </thead>
+            <!-- TABLE -->
+            <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100 pb-4">
+                <table class="table w-full">
+                    <thead>
+                        <tr class="font-[figtree-m] uppercase text-xs opacity-60">
+                            <th>Produit</th>
+                            <th>Couleur</th>
+                            <th>Prix</th>
+                            <th>Qtt</th>
+                            <th>Remise</th>
+                            <th>Livraison</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
 
-                <tbody>
-                <tr th:each="detail : ${order.details}" class="hover:bg-neutral-50 transition-colors">
+                    <tbody>
+                        <tr th:each="detail : ${order.details}" class="hover:bg-neutral-50 transition-colors">
 
-                    <td th:text="${detail.product.name + ' Ar'}"></td>
+                            <td th:text="${detail.product.name + ' Ar'}"></td>
 
-                    <td th:text="${detail.product.color.name}"></td>
+                            <td th:text="${detail.product.color.name}"></td>
 
-                    <td th:text="${detail.productPrice + ' Ar'}"></td>
+                            <td th:text="${detail.productPrice + ' Ar'}"></td>
 
-                    <td th:text="${detail.qtt}"></td>
+                            <td th:text="${detail.qtt}"></td>
 
-                    <td th:text="${detail.productDiscount + '%'}"></td>
+                            <td th:text="${detail.productDiscount + '%'}"></td>
 
-                    <td th:text="${detail.areaPrice + ' Ar'}"></td>
+                            <td th:text="${detail.areaPrice + ' Ar'}"></td>
 
-                    <td class="font-[figtree-sb]"
-                        th:text="${detail.totalPrice + ' Ar'}">
-                    </td>
+                            <td class="font-[figtree-sb]" th:text="${detail.totalPrice + ' Ar'}">
+                            </td>
 
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                            <td>
+                                <form th:unless="${detail.isBack()}" th:action="@{/client/order/return}" method="post">
+                                    <input type="hidden" name="idOrderDetail" th:value="${detail.id}">
+                                    <button type="submit"
+                                        class="btn btn-sm btn-ghost text-rose-600 hover:bg-rose-50 transition-colors">
+                                        Rendre
+                                    </button>
+                                </form>
+                                <span th:if="${detail.isBack()}"
+                                    class="px-3 py-1 bg-rose-50 text-rose-600 rounded-full text-xs font-[figtree-sb]">
+                                    Rendu
+                                </span>
+                            </td>
 
-        <!-- TOTALS -->
-        <div class="flex justify-end">
-            <div class="flex flex-col gap-2 px-4 w-108 py-4 bg-white
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- TOTALS -->
+            <div class="flex justify-end">
+                <div class="flex flex-col gap-2 px-4 w-108 py-4 bg-white
                 rounded-box shadow-md border border-neutral-100">
 
-                <div class="flex justify-between">
-                    <span class="text-sm text-neutral-500">Total produits :</span>
-                    <span class="text-xl font-[figtree-sb]"
-                          th:text="${order.productCost + ' Ar'}"></span>
+                    <div class="flex justify-between items-end">
+                        <span class="text-sm text-neutral-500">Total produits :</span>
+                        <span class="text-xl font-[figtree-sb]" th:text="${order.productCost + ' Ar'}"></span>
+                    </div>
+
+                    <div class="flex justify-between items-end">
+                        <span class="text-sm text-neutral-500">Total livraisons :</span>
+                        <span class="text-xl font-[figtree-sb]" th:text="${order.deliveryCost + ' Ar'}"></span>
+                    </div>
+
+                    <div class="flex justify-between items-end">
+                        <span class="text-sm text-neutral-500">Remise :</span>
+                        <span class="text-xl font-[figtree-sb]" th:text="${order.discount + ' Ar'}"></span>
+                    </div>
+
+                    <div class="divider my-1"></div>
+
+                    <div class="flex justify-between items-end">
+                        <span class="text-sm text-neutral-500">Total :</span>
+                        <span class="text-2xl font-[figtree-b] text-primary"
+                            th:text="${order.totalCost + ' Ar'}"></span>
+                    </div>
+
                 </div>
-
-                <div class="flex justify-between">
-                    <span class="text-sm text-neutral-500">Total livraisons :</span>
-                    <span class="text-xl font-[figtree-sb]"
-                          th:text="${order.deliveryCost + ' Ar'}"></span>
-                </div>
-
-                <div class="flex justify-between">
-                    <span class="text-sm text-neutral-500">Remise :</span>
-                    <span class="text-xl font-[figtree-sb]"
-                          th:text="${order.discount + ' Ar'}"></span>
-                </div>
-
-                <div class="divider my-1"></div>
-
-                <div class="flex justify-between">
-                    <span class="text-sm text-neutral-500">Total :</span>
-                    <span class="text-2xl font-[figtree-b] text-primary"
-                          th:text="${order.totalCost + ' Ar'}"></span>
-                </div>
-
             </div>
+
         </div>
 
     </div>
 
-</div>
-
 </body>
+
 </html>

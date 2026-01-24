@@ -10,7 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import vaisselle.models.tables.BalanceMovement;
 import vaisselle.models.tables.Order;
+import vaisselle.models.tables.OrderDetail;
+import vaisselle.models.tables.OrderDetailBack;
+import vaisselle.services.BalanceMovementService;
+import vaisselle.services.BalanceMovementTypeService;
+import vaisselle.services.OrderDetailBackService;
+import vaisselle.services.OrderDetailService;
 import vaisselle.services.OrderService;
 
 @Controller
@@ -19,6 +26,18 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
+
+    @Autowired
+    private OrderDetailBackService orderDetailBackService;
+
+    @Autowired
+    private BalanceMovementService balanceMovementService;
+
+    @Autowired
+    private BalanceMovementTypeService balanceMovementTypeService;
 
     public OrderController() {
     }
@@ -43,6 +62,26 @@ public class OrderController {
         Order newOrder = orderService.makeOrder(idCart);
 
         return "redirect:/client/order/" + newOrder.getId();
+    }
+
+    @PostMapping("/return")
+    public String returnItem(@RequestParam("idOrderDetail") Long idOrderDetail) {
+        OrderDetail detail = orderDetailService.findById(idOrderDetail);
+        if (detail != null) {
+            OrderDetailBack back = new OrderDetailBack();
+            back.setOrderDetail(detail);
+            // The value is what the client paid: totalPrice
+            back.setValue(detail.getTotalPrice());
+            orderDetailBackService.save(back);
+
+            BalanceMovement movement = new BalanceMovement();
+            movement.setAmount(detail.getTotalPrice());
+            movement.setType(balanceMovementTypeService.findById(2L)); // 2 = Rendu
+            balanceMovementService.save(movement);
+
+            return "redirect:/client/order/" + detail.getOrder().getId();
+        }
+        return "redirect:/client/order";
     }
 
 }
