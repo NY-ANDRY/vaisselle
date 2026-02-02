@@ -10,12 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
-import vaisselle.models.tables.BalanceMovement;
 import vaisselle.models.tables.Order;
 import vaisselle.models.tables.OrderDetail;
-import vaisselle.models.tables.OrderDetailBack;
-import vaisselle.services.BalanceMovementService;
-import vaisselle.services.BalanceMovementTypeService;
 import vaisselle.services.OrderDetailBackService;
 import vaisselle.services.OrderDetailService;
 import vaisselle.services.OrderService;
@@ -32,12 +28,6 @@ public class OrderController {
 
     @Autowired
     private OrderDetailBackService orderDetailBackService;
-
-    @Autowired
-    private BalanceMovementService balanceMovementService;
-
-    @Autowired
-    private BalanceMovementTypeService balanceMovementTypeService;
 
     public OrderController() {
     }
