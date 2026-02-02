@@ -1,5 +1,6 @@
 package vaisselle.models.tables;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductImage> images;
 
+    @OneToMany(mappedBy = "product")
+    private List<ProductReduct> reducts;
+
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
@@ -74,15 +78,32 @@ public class Product {
     public Product() {
     }
 
+    @OneToMany(mappedBy = "product")
+    private List<ProductPromotion> productPromotions;
+
     public double getPrice() {
         double result = getLocation();
         double augmentation = getAugmentation();
 
-        if (augmentation <= 0) {
-            return result;
+        if (augmentation > 0) {
+            result = result + ((result / 100) * augmentation);
         }
 
-        result = result + ((result / 100) * augmentation);
+        if (getProductPromotions().size() > 0) {
+            // System.out.println("some promotion");
+            LocalDate now = LocalDate.now();
+            for (ProductPromotion pp : getProductPromotions()) {
+                // if (pp.getPromotion().getDate().isEqual(now)) {
+                // result = result - ((result * pp.getPromotion().getPromotion()) / 100);
+                // }
+                if (!now.isBefore(pp.getPromotion().getDate()) && !now.isAfter(pp.getPromotion().getDate_fin())) {
+                    result = result - ((result * pp.getPromotion().getPromotion()) / 100);
+                }
+            }
+        } else {
+            // System.out.println("no promotion");
+        }
+
         return result;
     }
 
@@ -276,6 +297,14 @@ public class Product {
 
     public void setVariantsStatic(List<Product> variantsStatic) {
         this.variantsStatic = variantsStatic;
+    }
+
+    public List<ProductPromotion> getProductPromotions() {
+        return productPromotions;
+    }
+
+    public void setProductPromotions(List<ProductPromotion> productPromotions) {
+        this.productPromotions = productPromotions;
     }
 
 }

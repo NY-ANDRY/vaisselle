@@ -96,3 +96,16 @@ CREATE TABLE "t_discountCart" (
     nb INT NOT NULL,
     discount DOUBLE PRECISION NOT NULL
 );
+
+CREATE TABLE t_promotions (
+    id SERIAL PRIMARY KEY,
+    description TEXT,
+    date DATE NOT NULL,
+    promotion DOUBLE PRECISION NOT NULL
+);
+
+CREATE TABLE t_products_promotions (
+    id SERIAL PRIMARY KEY,
+    id_product INT REFERENCES t_products(id),
+    id_promotion INT REFERENCES t_promotions(id)
+);

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout/layout}">
+
+<head>
+    <title>Manage Promotion Products</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content" class="flex gap-8 max-h-full overflow-hidden">
+
+        <div class="flex flex-col flex-1 max-h-full overflow-auto overflow-y-auto">
+
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-xl font-[figtree-m]">Manage Products for Promotion: <span
+                            th:text="${promotion.description}"></span></h1>
+                    <p class="text-sm opacity-60"
+                        th:text="'Value: ' + ${promotion.promotion} + ' | Date: ' + ${promotion.date}"></p>
+                </div>
+                <div class="flex gap-2">
+                    <a href="/admin/promotions" class="btn btn-sm btn-ghost">Back to List</a>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100">
+                <table class="table w-full">
+                    <thead>
+                        <tr class="font-[figtree-m] uppercase text-xs opacity-60">
+                            <th>Product</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${products}" class="hover:bg-neutral-50 transition-colors">
+                            <td>
+                                <div class="flex items-center gap-3">
+                                    <div class="avatar">
+                                        <div class="mask mask-squircle h-12 w-12 shadow-sm">
+                                            <img th:src="${product.image != null ? product.image : 'https://img.daisyui.com/images/profile/demo/2@94.webp'}"
+                                                alt="Product Image" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="font-bold font-[figtree-m]" th:text="${product.name}">Product Name
+                                        </div>
+                                        <div class="text-sm opacity-50 font-[figtree]" th:text="${product.model.name}">
+                                            Model</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span th:if="${productPromotionService.isProductAssigned(product.id, promotion.id)}"
+                                    class="badge badge-success badge-sm">Assigned</span>
+                                <span th:unless="${productPromotionService.isProductAssigned(product.id, promotion.id)}"
+                                    class="badge badge-ghost badge-sm">Not Assigned</span>
+                            </td>
+                            <td>
+                                <div th:if="${productPromotionService.isProductAssigned(product.id, promotion.id)}">
+                                    <form
+                                        th:action="@{/admin/promotions/{id}/products/{productId}/remove(id=${promotion.id}, productId=${product.id})}"
+                                        method="post">
+                                        <button type="submit" class="btn btn-sm btn-error btn-outline">Remove</button>
+                                    </form>
+                                </div>
+                                <div th:unless="${productPromotionService.isProductAssigned(product.id, promotion.id)}">
+                                    <form
+                                        th:action="@{/admin/promotions/{id}/products/{productId}/assign(id=${promotion.id}, productId=${product.id})}"
+                                        method="post">
+                                        <button type="submit" class="btn btn-sm btn-primary btn-outline">Assign</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

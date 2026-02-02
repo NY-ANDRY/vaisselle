@@ -58,6 +58,11 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
+    public double getBackValue() {
+        double result = getTotalProduct() - getProductDiscountValue();
+        return result;
+    }
+
     public boolean isBack() {
         return returns != null && !returns.isEmpty();
     }

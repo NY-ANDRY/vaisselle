@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout/layout}">
+
+<head>
+    <title>Promotions</title>
+</head>
+
+<body>
+
+    <div layout:fragment="content" class="flex gap-8 max-h-full overflow-hidden">
+
+        <div class="flex flex-col flex-1 max-h-full overflow-auto overflow-y-auto">
+
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-xl font-[figtree-m]">Promotions</h1>
+                <div class="flex gap-2">
+                    <a href="/admin/promotions/create" class="btn btn-primary btn-sm">Create New</a>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto bg-base-100 rounded-box shadow-md border border-neutral-100">
+                <table class="table w-full">
+                    <thead>
+                        <tr class="font-[figtree-m] uppercase text-xs opacity-60">
+                            <th>ID</th>
+                            <th>Description</th>
+                            <th>Date debut</th>
+                            <th>Date fin</th>
+                            <th>Value</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="promotion : ${promotions}" class="hover:bg-neutral-50 transition-colors">
+                            <td th:text="${promotion.id}">ID</td>
+                            <td th:text="${promotion.description}">Description</td>
+                            <td th:text="${promotion.date}">Date</td>
+                            <td th:text="${promotion.date_fin}">Date</td>
+                            <td th:text="${promotion.promotion}">Value</td>
+                            <td>
+                                <div class="flex justify-end items-center gap-2 w-full">
+                                    <a th:href="@{/admin/promotions/{id}/products(id=${promotion.id})}"
+                                        class="btn btn-sm btn border-neutral-100 text-neutral-700">
+                                        Manage Products
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
